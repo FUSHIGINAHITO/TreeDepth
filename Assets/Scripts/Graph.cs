@@ -1,27 +1,67 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public class Graph<T>
+public class Graph<T, S>
 {
     public int VertexNum => vertices.Count;
+    public bool inPool = true;
 
     private LinkedList<Vertex> vertices = new();
     private Queue<Vertex> queue = new();
 
     public class Vertex
     {
-        private LinkedList<Vertex> neighbors = new();
+        public class Edge
+        {
+            public Vertex origin;
+            public Vertex target;
+            public S value;
+
+            private Edge inverseEdge;
+            private LinkedListNode<Edge> node;
+
+            public static void Create(Vertex _origin, Vertex _target, S v)
+            {
+                Edge e = new();
+                e.value = v;
+                e.origin = _origin;
+                e.target = _target;
+                e.node = _origin.neighbors.AddLast(e);
+
+                e.inverseEdge = new();
+                e.inverseEdge.origin = _target;
+                e.inverseEdge.target = _origin;
+                e.inverseEdge.inverseEdge = e;
+                e.inverseEdge.value = v;
+                e.inverseEdge.node = _target.neighbors.AddLast(e.inverseEdge);
+            }
+
+            public static void Delete(Edge e)
+            {
+                e.Delete();
+                e.inverseEdge.Delete();
+            }
+
+            private void Delete()
+            {
+                origin.neighbors.Remove(node);
+            }
+        }
+
+
+        private LinkedList<Edge> neighbors = new();
         public T value;
         public bool visited; // 仅外部用
         public bool _visited; // 仅内部用
 
-        public IEnumerable<LinkedListNode<Vertex>> Neighbors
+        public IEnumerable<LinkedListNode<Edge>> Neighbors
         {
             get
             {
-                LinkedListNode<Vertex> cur = neighbors.First;
+                var cur = neighbors.First;
                 while (cur != null)
                 {
-                    LinkedListNode<Vertex> next = cur.Next;
+                    var next = cur.Next;
                     yield return cur;
                     cur = next;
                 }
@@ -35,25 +75,39 @@ public class Graph<T>
 
         public bool Adj(Vertex u)
         {
-            return neighbors.Contains(u);
+            foreach (var cur in Neighbors)
+            {
+                if (cur.Value.target == u)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public void AddNeighbor(Vertex u)
+        public void AddNeighbor(Vertex u, S edgeValue)
         {
-            u.neighbors.AddLast(this);
-            neighbors.AddLast(u);
+            Edge.Create(this, u, edgeValue);
         }
 
         public void DelNeighbor(Vertex u)
         {
-            u.neighbors.Remove(this);
-            neighbors.Remove(u);
+            foreach (var cur in Neighbors)
+            {
+                if (cur.Value.target == u)
+                {
+                    Edge.Delete(cur.Value);
+                    break;
+                }
+            }
         }
 
-        public void DelNeighbor(LinkedListNode<Vertex> u)
+        internal void Clear()
         {
-            u.Value.neighbors.Remove(this);
-            neighbors.Remove(u);
+            foreach (var cur in Neighbors)
+            {
+                Edge.Delete(cur.Value);
+            }
         }
     }
 
@@ -84,21 +138,13 @@ public class Graph<T>
     public void DelVertex(Vertex u)
     {
         vertices.Remove(u);
-
-        foreach (var v in u.Neighbors)
-        {
-            u.DelNeighbor(v);
-        }
+        u.Clear();
     }
 
     public void DelVertex(LinkedListNode<Vertex> u)
     {
         vertices.Remove(u);
-
-        foreach (var v in u.Value.Neighbors)
-        {
-            u.Value.DelNeighbor(v);
-        }
+        u.Value.Clear();
     }
 
     public IEnumerable<Vertex> BfsEnumerator(Vertex start)
@@ -117,11 +163,11 @@ public class Graph<T>
             u._visited = true;
             yield return u;
 
-            foreach (var v in u.Neighbors)
+            foreach (var e in u.Neighbors)
             {
-                if (!v.Value._visited)
+                if (!e.Value.target._visited)
                 {
-                    queue.Enqueue(v.Value);
+                    queue.Enqueue(e.Value.target);
                 }
             }
         }
@@ -147,5 +193,40 @@ public class Graph<T>
                 cur = next;
             }
         }
+    }
+
+    public void Clear()
+    {
+        vertices.Clear();
+        queue.Clear();
+    }
+}
+
+
+public class GraphPool<T, S>
+{
+    private List<Graph<T, S>> graphs = new();
+    
+    public Graph<T, S> Require()
+    {
+        foreach (var graph in graphs)
+        {
+            if (graph.inPool)
+            {
+                graph.inPool = false;
+                return graph;
+            }
+        }
+
+        Graph<T, S> newGraph = new();
+        newGraph.inPool = false;
+        graphs.Add(newGraph);
+        return newGraph;
+    }
+
+    public void Return(Graph<T, S> graph)
+    {
+        graph.inPool = true;
+        graph.Clear();
     }
 }

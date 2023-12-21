@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: GraphPanel
+    uniqueID: 3979005679
+    locked: 0
+  - name: Node
+    uniqueID: 936263393
+    locked: 0
+  - name: Link
+    uniqueID: 3370880679
+    locked: 0
