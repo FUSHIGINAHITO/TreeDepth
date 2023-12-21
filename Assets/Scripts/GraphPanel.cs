@@ -10,13 +10,19 @@ public class GraphPanel : MonoBehaviour
     public Transform ui;
     public List<SpriteRenderer> rends;
     public TMP_Text counter;
+    public LinkedListNode<GraphPanel> node;
 
     public Vector3 targetPos;
     private Vector3 followVelocity;
+    public Vector3 targetScale;
+    private Vector3 scaleVelocity;
+
+    private float scaleErr = 0.15f;
 
     private void Update()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref followVelocity, 0.5f, float.MaxValue);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref followVelocity, 0.3f, float.MaxValue);
+        transform.localScale = Vector3.SmoothDamp(transform.localScale, scaleErr * targetScale, ref scaleVelocity, 0.3f, float.MaxValue);
     }
 
     public void Init(Graph<Node, Link> _graph, int _step)
@@ -67,5 +73,10 @@ public class GraphPanel : MonoBehaviour
                 e.Value.value.obj.transform.SetParent(transform, false);
             }
         }
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

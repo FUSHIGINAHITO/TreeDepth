@@ -75,6 +75,11 @@ public class Graph<T, S>
 
         public bool Adj(Vertex u)
         {
+            if (u == this)
+            {
+                return true;
+            }
+
             foreach (var cur in Neighbors)
             {
                 if (cur.Value.target == u)
