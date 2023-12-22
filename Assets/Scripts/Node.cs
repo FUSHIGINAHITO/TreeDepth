@@ -1,8 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Node : MonoBehaviour
 {
+    [Serializable]
+    public class Adj
+    {
+        public Node target;
+        public Color linkColor;
+    }
+    public Color color;
+    public List<Adj> adjs;
+
     public GameObject obj;
     public Vector2 relPos;
     public Graph<Node, Link>.Vertex vertex;

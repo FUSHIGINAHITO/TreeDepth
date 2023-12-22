@@ -12,6 +12,9 @@ public class GraphPanel : MonoBehaviour
     public TMP_Text counter;
     public LinkedListNode<GraphPanel> node;
 
+    public Renderer rend;
+    private Material mat;
+
     public Vector3 targetPos;
     private Vector3 followVelocity;
     public Vector3 targetScale;
@@ -29,8 +32,14 @@ public class GraphPanel : MonoBehaviour
     {
         SetGraph(_graph);
         step = _step;
+        mat = rend.material;
 
         AddStep(0);
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(mat);
     }
 
     public void SetSize(float size)
@@ -49,6 +58,9 @@ public class GraphPanel : MonoBehaviour
         {
             rend.color = color;
         }
+
+        mat.SetColor("_color", color);
+
         counter.color = textColor;
     }
 

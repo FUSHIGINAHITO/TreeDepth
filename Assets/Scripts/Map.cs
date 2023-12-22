@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,9 +25,46 @@ public class Map : MonoBehaviour
 
     private GraphPool<Node, Link> graphPool = new();
     private List<Graph<Node, Link>> newGraphs = new();
+    private List<ComparableGraph> comparableGraphs = new();
 
     private float radius = 2f;
     private System.Random random = new();
+
+    private class ComparableGraph : IComparable<ComparableGraph>
+    {
+        public Graph<Node, Link> graph;
+        public float center = 0;
+
+        public ComparableGraph(Graph<Node, Link> _graph)
+        {
+            graph = _graph;
+
+            if (graph.VertexNum > 0)
+            {
+                foreach (var node in graph.Vertices)
+                {
+                    center += node.Value.value.transform.localPosition.x;
+                }
+
+                center /= graph.VertexNum;
+            }
+        }
+
+        public int CompareTo(ComparableGraph other)
+        {
+            if (center < other.center)
+            {
+                return -1;
+            }
+
+            if (center > other.center)
+            {
+                return 1;
+            }
+
+            else return 0;
+        }
+    }
 
     private void Awake()
     {
@@ -114,7 +152,7 @@ public class Map : MonoBehaviour
         {
             foreach (var e in node.vertex.Neighbors)
             {
-                e.Value.value.Hide();
+                e.Value.value.Hide(node);
             }
             node.Remove();
 
@@ -148,25 +186,25 @@ public class Map : MonoBehaviour
 
         if (newGraphs.Count > 1)
         {
-            graphPool.Return(graph);
-            Graph<Node, Link> remainedGraph = newGraphs[0];
+            comparableGraphs.Clear();
             foreach (var newGraph in newGraphs)
             {
-                if (newGraph.VertexNum > remainedGraph.VertexNum)
-                {
-                    remainedGraph = newGraph;
-                }
+                comparableGraphs.Add(new(newGraph));
             }
+            comparableGraphs.Sort();
 
-            foreach (var newGraph in newGraphs)
+            graphPool.Return(graph);
+            var remainedGraph = comparableGraphs[0];
+
+            foreach (var comparableGraph in comparableGraphs)
             {
-                if (newGraph != remainedGraph)
+                if (comparableGraph != remainedGraph)
                 {
-                    CreateGraphPanel(graphPanel, newGraph, graphPanel.step);
+                    CreateGraphPanel(graphPanel, comparableGraph.graph, graphPanel.step);
                 }
                 else
                 {
-                    graphPanel.SetGraph(remainedGraph);
+                    graphPanel.SetGraph(remainedGraph.graph);
                 }
             }
         }
@@ -188,15 +226,22 @@ public class Map : MonoBehaviour
 
                 if (graphPanel.step + graphPanel.graph.VertexNum <= step)
                 {
-                    graphPanel.SetColor(Color.gray, Color.black);
+                    if (graphPanel.step < step)
+                    {
+                        graphPanel.SetColor(MyColor.gray, MyColor.gray);
+                    }
+                    else
+                    {
+                        graphPanel.SetColor(MyColor.gray, MyColor.red);
+                    }
                 }
                 else if (graphPanel.step < step)
                 {
-                    graphPanel.SetColor(MyColor.green, Color.black);
+                    graphPanel.SetColor(MyColor.green, MyColor.green);
                 }
                 else
                 {
-                    graphPanel.SetColor(MyColor.orange, Color.black);
+                    graphPanel.SetColor(MyColor.orange, MyColor.red);
                 }
 
                 count++;
@@ -206,7 +251,7 @@ public class Map : MonoBehaviour
         levelText.text = "Level " + levelPtr.ToString();
         levelText.color = MyColor.cyan;
         stepText.text = step.ToString();
-        stepText.color = MyColor.cyan;
+        stepText.color = MyColor.red;
     }
 
     public void Create()
@@ -231,7 +276,7 @@ public class Map : MonoBehaviour
             var theta = 2 * Mathf.PI / size * i;
             Vector2 relPos = radius * new Vector2(Mathf.Sin(theta), Mathf.Cos(theta));
             nodeObj.transform.localPosition = relPos;
-            var node = nodeObj.AddComponent<Node>();
+            var node = nodeObj.GetComponent<Node>();
             node.Init(nodeObj, relPos);
             graph.AddVertex(node.vertex);
         }
@@ -251,9 +296,9 @@ public class Map : MonoBehaviour
                     linkObj.transform.right = vi.Value.value.relPos - vj.Value.value.relPos;
                     linkObj.transform.position = 0.5f * (vi.Value.value.relPos + vj.Value.value.relPos);
 
-                    var link = linkObj.AddComponent<Link>();
+                    var link = linkObj.GetComponent<Link>();
                     link.targetScale = new Vector3((vi.Value.value.relPos - vj.Value.value.relPos).magnitude, 1, 1);
-                    link.Init(linkObj);
+                    link.Init(vi.Value.value, vj.Value.value, linkObj);
                     vi.Value.AddNeighbor(vj.Value, link);
                 }
             }
