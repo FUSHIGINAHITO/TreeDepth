@@ -25,9 +25,9 @@ public class Player : MonoBehaviour
                     if (node != null)
                     {
                         map.RemoveNode(node);
+                        timer = 0.5f;
                     }
                 }
-                timer = 0.5f;
             }
 
             if (timer > 0)

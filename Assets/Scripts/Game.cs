@@ -17,6 +17,8 @@ public class Game : MonoBehaviour
     {
         map = GetComponent<Map>();
         NewGame();
+
+        Application.targetFrameRate = 60;
     }
 
     private void Update()

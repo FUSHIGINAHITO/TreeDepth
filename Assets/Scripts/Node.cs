@@ -24,7 +24,7 @@ public class Node : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale = Vector3.SmoothDamp(transform.localScale, targetScale, ref scaleVelocity, 0.1f, float.MaxValue);
+        transform.localScale = Vector3.SmoothDamp(transform.localScale, targetScale, ref scaleVelocity, 0.2f, float.MaxValue);
     }
 
     public void Init(GameObject _obj, Vector2 pos)

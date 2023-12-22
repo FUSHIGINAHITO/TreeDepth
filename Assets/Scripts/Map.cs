@@ -293,7 +293,7 @@ public class Map : MonoBehaviour
                 {
                     var linkObj = Instantiate(linkPrefab);
 
-                    linkObj.transform.right = vi.Value.value.relPos - vj.Value.value.relPos;
+                    linkObj.transform.rotation = Quaternion.AngleAxis(Vector2.SignedAngle(vj.Value.value.relPos - vi.Value.value.relPos, -Vector2.right), -Vector3.forward);
                     linkObj.transform.position = 0.5f * (vi.Value.value.relPos + vj.Value.value.relPos);
 
                     var link = linkObj.GetComponent<Link>();
