@@ -160,18 +160,19 @@ public class Graph<T, S>
             v._visited = false;
         }
 
+        start._visited = true;
         queue.Enqueue(start);
 
         while (queue.Count > 0)
         {
             Vertex u = queue.Dequeue();
-            u._visited = true;
             yield return u;
 
             foreach (var e in u.Neighbors)
             {
                 if (!e.Value.target._visited)
                 {
+                    e.Value.target._visited = true;
                     queue.Enqueue(e.Value.target);
                 }
             }

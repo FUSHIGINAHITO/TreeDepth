@@ -27,7 +27,7 @@ public class Game : MonoBehaviour
         {
             if (!next)
             {
-                _camera.backgroundColor = Color.white;
+                _camera.backgroundColor = Color.black;
                 next = true;
             }
             else

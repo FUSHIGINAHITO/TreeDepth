@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Node : MonoBehaviour
 {
@@ -6,12 +7,22 @@ public class Node : MonoBehaviour
     public Vector2 relPos;
     public Graph<Node, Link>.Vertex vertex;
     public GraphPanel graphPanel;
+    public Collider2D cld;
+
+    public Vector3 targetScale = Vector3.one;
+    private Vector3 scaleVelocity;
+
+    private void Update()
+    {
+        transform.localScale = Vector3.SmoothDamp(transform.localScale, targetScale, ref scaleVelocity, 0.1f, float.MaxValue);
+    }
 
     public void Init(GameObject _obj, Vector2 pos)
     {
         obj = _obj;
         relPos = pos;
         vertex = new(this);
+        cld = GetComponent<Collider2D>();
     }
 
     public void Remove()
@@ -22,6 +33,7 @@ public class Node : MonoBehaviour
 
     public void Hide()
     {
-        obj.SetActive(false);
+        cld.enabled = false;
+        targetScale = Vector3.zero;
     }
 }

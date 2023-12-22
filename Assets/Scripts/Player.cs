@@ -4,6 +4,7 @@ public class Player : MonoBehaviour
 {
     private Game game;
     private Map map;
+    float timer = 0;
 
     private void Awake()
     {
@@ -26,7 +27,26 @@ public class Player : MonoBehaviour
                         map.RemoveNode(node);
                     }
                 }
+                timer = 0.5f;
             }
+
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                AutoDelete();
+                timer = 0.5f;
+            }
+        }
+    }
+
+    private void AutoDelete()
+    {
+        if (!game.Win)
+        {
+            map.AutoDelete();
         }
     }
 }

@@ -10,9 +10,16 @@ public class Link : MonoBehaviour
         obj = _obj;
     }
 
+    public Vector3 targetScale = Vector3.one;
+    private Vector3 scaleVelocity;
+
+    private void Update()
+    {
+        transform.localScale = Vector3.SmoothDamp(transform.localScale, targetScale, ref scaleVelocity, 0.1f, float.MaxValue);
+    }
 
     public void Hide()
     {
-        obj.SetActive(false);
+        targetScale = Vector3.zero;
     }
 }

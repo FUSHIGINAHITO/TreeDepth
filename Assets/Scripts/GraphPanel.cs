@@ -43,7 +43,7 @@ public class GraphPanel : MonoBehaviour
         counter.text = txt;
     }
 
-    private void SetColor(Color color, Color textColor)
+    public void SetColor(Color color, Color textColor)
     {
         foreach (var rend in rends)
         {
@@ -55,7 +55,6 @@ public class GraphPanel : MonoBehaviour
     public void AddStep(int add)
     {
         step += add;
-        SetColor(Color.green, Color.black);
         SetCounterText(step.ToString());
     }
 
@@ -77,6 +76,6 @@ public class GraphPanel : MonoBehaviour
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        targetScale = Vector3.zero;
     }
 }
