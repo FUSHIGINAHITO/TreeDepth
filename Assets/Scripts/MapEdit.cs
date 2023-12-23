@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class MapEdit : MonoBehaviour
 {
+    public string mapName;
     public GameObject agentObj;
     [TextArea(30, 1000)]
     public string data;

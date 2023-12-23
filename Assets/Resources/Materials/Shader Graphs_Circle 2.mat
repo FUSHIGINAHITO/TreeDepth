@@ -41,8 +41,11 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _radius: 0.3
+    - _shineStrength: 0
+    - _shineWidth: 0.1
     - _smooth: 0.06
-    - _width: 1
+    - _speed: 5
+    - _width: 0.1
     m_Colors:
     - _color: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

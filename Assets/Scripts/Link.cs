@@ -9,8 +9,19 @@ public class Link : MonoBehaviour
     public GameObject obj;
     public Renderer rend;
     private Material mat;
-    public Color targetColor;
-    private Color curColor = MyColor.zero;
+    public Color targetColorLeft;
+    private Color curColorLeft = MyColor.zero;    
+    public Color targetColorRight;
+    private Color curColorRight = MyColor.zero;
+
+    public float targetLeftFill = 1;
+    public float curLeftFill = 1;
+    public float targetRightFill = 1;
+    public float curRightFill = 1;
+    private float leftVelocity;
+    private float rightVelocity;
+    public Vector3 targetScale = Vector3.one;
+    private Vector3 scaleVelocity;
 
     public void Init(Node _origin, Node _target, GameObject _obj)
     {
@@ -18,22 +29,13 @@ public class Link : MonoBehaviour
         target = _target;
         obj = _obj;
         mat = rend.material;
-        SetColor(curColor);
+        SetColor(curColorLeft, curColorRight);
     }
 
     private void OnDestroy()
     {
         Destroy(mat);
     }
-
-    public float targetLeftFill = 1;
-    public float curLeftFill = 1;
-    public float targetRightFill = 1;
-    public float curRightFill = 1;
-    private float leftVelocity;
-    private float rightVelocity; 
-    public Vector3 targetScale = Vector3.one;
-    private Vector3 scaleVelocity;
 
     private void Update()
     {
@@ -53,8 +55,9 @@ public class Link : MonoBehaviour
             }
         }
 
-        curColor = Color.Lerp(curColor, targetColor, 0.05f);
-        SetColor(curColor);
+        curColorLeft = Color.Lerp(curColorLeft, targetColorLeft, 0.05f);
+        curColorRight = Color.Lerp(curColorRight, targetColorRight, 0.05f);
+        SetColor(curColorLeft, curColorRight);
     }
 
     public void Hide(Node node)
@@ -68,16 +71,18 @@ public class Link : MonoBehaviour
             targetRightFill = 0;
         }
 
-        targetColor = MyColor.zero;
+        Hide();
     }
 
     public void Hide()
     {
-        targetColor = MyColor.zero;
+        targetColorLeft = MyColor.zero;
+        targetColorRight = MyColor.zero;
     }
 
-    private void SetColor(Color color)
+    private void SetColor(Color colorLeft, Color colorRight)
     {
-        mat.SetColor("_color", color);
+        mat.SetColor("_color", colorLeft);
+        mat.SetColor("_color2", colorRight);
     }
 }
