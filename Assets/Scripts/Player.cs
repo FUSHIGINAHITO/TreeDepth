@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
                     var node = hit.collider.GetComponent<Node>();
                     if (node != null)
                     {
-                        map.RemoveNode(node);
+                        map.RemoveNode(node, true);
                         timer = 0.5f;
                     }
                 }

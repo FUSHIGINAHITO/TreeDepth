@@ -50,7 +50,7 @@ public class Game : MonoBehaviour
         started = true;
         win = false;
         next = false;
-        timer = 1;
+        timer = 1f;
         map.Create();
         _camera.backgroundColor = Color.black;
     }

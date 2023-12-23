@@ -304,10 +304,14 @@ MonoBehaviour:
   ui: {fileID: 2693641261923427892}
   rends:
   - {fileID: 751800760288702473}
+  - {fileID: 6861062536536607613}
   counter: {fileID: 4698178571738514892}
+  bg: {fileID: 2477680077363805604}
   rend: {fileID: 6861062536536607613}
   targetPos: {x: 0, y: 0, z: 0}
   targetScale: {x: 0, y: 0, z: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  targetTextColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &5550875252086876539
 GameObject:
   m_ObjectHideFlags: 0

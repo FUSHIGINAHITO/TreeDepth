@@ -8,8 +8,9 @@ public class Link : MonoBehaviour
 
     public GameObject obj;
     public Renderer rend;
-
     private Material mat;
+    public Color targetColor;
+    private Color curColor = MyColor.zero;
 
     public void Init(Node _origin, Node _target, GameObject _obj)
     {
@@ -17,6 +18,7 @@ public class Link : MonoBehaviour
         target = _target;
         obj = _obj;
         mat = rend.material;
+        SetColor(curColor);
     }
 
     private void OnDestroy()
@@ -50,6 +52,9 @@ public class Link : MonoBehaviour
                 mat.SetFloat("_rightFill", curRightFill);
             }
         }
+
+        curColor = Color.Lerp(curColor, targetColor, 0.05f);
+        SetColor(curColor);
     }
 
     public void Hide(Node node)
@@ -62,9 +67,16 @@ public class Link : MonoBehaviour
         {
             targetRightFill = 0;
         }
+
+        targetColor = MyColor.zero;
     }
 
-    public void SetColor(Color color)
+    public void Hide()
+    {
+        targetColor = MyColor.zero;
+    }
+
+    private void SetColor(Color color)
     {
         mat.SetColor("_color", color);
     }

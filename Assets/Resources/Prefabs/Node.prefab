@@ -82,10 +82,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c96080a5b6536b4f8b476578bccf362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
+  adjs: []
   obj: {fileID: 0}
   relPos: {x: 0, y: 0}
   graphPanel: {fileID: 0}
   cld: {fileID: 0}
+  rend: {fileID: 420715774993510746}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
   targetScale: {x: 1, y: 1, z: 1}
 --- !u!1 &7241154469837475763
 GameObject:
@@ -160,7 +164,7 @@ SpriteRenderer:
   m_SortingLayerID: 936263393
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: 04dd42e19b1061b4fa5aeff6d9be9b1f, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 9284e81955d68f84dac8c9e09a66fa6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -244,7 +248,7 @@ SpriteRenderer:
   m_SortingLayerID: 936263393
   m_SortingLayer: 3
   m_SortingOrder: 10
-  m_Sprite: {fileID: -2413806693520163455, guid: 04dd42e19b1061b4fa5aeff6d9be9b1f, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 9284e81955d68f84dac8c9e09a66fa6c, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

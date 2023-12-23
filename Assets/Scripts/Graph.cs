@@ -127,9 +127,8 @@ public class Graph<T, S>
                 return cur;
             }
 
-            LinkedListNode<Vertex> next = cur.Next;
             count++;
-            cur = next;
+            cur = cur.Next;
         }
 
         return null;

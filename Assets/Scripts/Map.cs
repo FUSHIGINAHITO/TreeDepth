@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Map : MonoBehaviour
@@ -13,6 +12,7 @@ public class Map : MonoBehaviour
 
     public TMP_Text levelText;
     public TMP_Text stepText;
+    public TMP_Text scoreText;
 
     public float H = 50;
     public float W = 70;
@@ -20,12 +20,17 @@ public class Map : MonoBehaviour
 
     private int levelPtr = 0;
     private List<List<int>> data = new();
+    private List<Vector3> pos = new();
+    private List<Color> colors = new();
     public LinkedList<GraphPanel> graphPanels = new();
     private int size;
+    private int score;
+    public int step;
 
     private GraphPool<Node, Link> graphPool = new();
     private List<Graph<Node, Link>> newGraphs = new();
     private List<ComparableGraph> comparableGraphs = new();
+    private List<int> shuffle = new();
 
     private float radius = 2f;
     private System.Random random = new();
@@ -62,7 +67,8 @@ public class Map : MonoBehaviour
                 return 1;
             }
 
-            else return 0;
+            else
+                return 0;
         }
     }
 
@@ -76,6 +82,7 @@ public class Map : MonoBehaviour
         var txt = Resources.Load<TextAsset>($"Maps/map{levelPtr}");
         if (txt != null)
         {
+            pos.Clear();
             data.Clear();
             foreach (var row in txt.text.Split("\r\n"))
             {
@@ -95,22 +102,63 @@ public class Map : MonoBehaviour
             return true;
         }
 
-        var num = random.Next(1, 20);
+        var mapObj = Resources.Load<GameObject>($"Maps/map{levelPtr}");
+        if (mapObj != null)
+        {
+            pos.Clear();
+            data.Clear();
+            var edit = mapObj.GetComponent<MapEdit>();
+
+            var agents = mapObj.GetComponentsInChildren<NodeAgent>();
+            foreach (var agent in agents)
+            {
+                data.Add(new());
+                pos.Add(agent.transform.position);
+                colors.Add(MyColor.GetColor(agent.color));
+            }
+            
+            foreach (var row in edit.data.Split("\n"))
+            {
+                var lst = row.Split("\t");
+                if (lst.Length != 2)
+                {
+                    continue;
+                }
+                if (int.TryParse(lst[0], out int u) && int.TryParse(lst[1], out int v))
+                {
+                    data[u].Add(v);
+                }
+            }
+
+            size = data.Count;
+
+            return true;
+        }
+
+        var num = random.Next(4, 20);
+        pos.Clear();
         data.Clear();
         for (int i = 0; i < num; i++)
         {
             List<int> rowData = new();
             data.Add(rowData);
 
-            List<int> shuffle = new();
-            Shuffle(num, shuffle);
+            Shuffle(num - 1, shuffle);
 
-            var c = random.Next(7);
+            var r = Mathf.FloorToInt(-Mathf.Log(1 - (float)random.NextDouble() + 0.0001f));
+            var c = Mathf.Clamp(r, 1, num - 2);
             foreach (var v in shuffle)
             {
                 if (c > 0)
                 {
-                    rowData.Add(v);
+                    if (v >= i)
+                    {
+                        rowData.Add(v + 1);
+                    }
+                    else
+                    {
+                        rowData.Add(v);
+                    }
                     c--;
                 }
                 else
@@ -143,30 +191,31 @@ public class Map : MonoBehaviour
         }
     }
 
-    public void RemoveNode(Node node = null)
+    public void RemoveNode(Node node, bool split)
     {
-        Graph<Node, Link> graph;
-        GraphPanel graphPanel;
-
-        if (node != null)
+        foreach (var e in node.vertex.Neighbors)
         {
-            foreach (var e in node.vertex.Neighbors)
-            {
-                e.Value.value.Hide(node);
-            }
-            node.Remove();
+            e.Value.value.Hide(node);
+        }
+        node.Remove();
 
-            graph = node.graphPanel.graph;
-            graphPanel = node.graphPanel;
-            graphPanel.AddStep(1);
-            UpdateStep();
+        node.graphPanel.AddStep(1);
+
+        UpdateStep();
+
+        if (split)
+        {
+            Split(node.graphPanel);
         }
         else
         {
-            graphPanel = graphPanels.First.Value;
-            graph = graphPanel.graph;
+            UpdateUI();
         }
+    }
 
+    private void Split(GraphPanel graphPanel)
+    {
+        var graph = graphPanel.graph;
         newGraphs.Clear();
         graph.ClearTag();
         foreach (var v in graph.Vertices)
@@ -223,25 +272,25 @@ public class Map : MonoBehaviour
             {
                 graphPanel.targetPos = res[count];
                 graphPanel.targetScale = a * Vector3.one;
+                /*var counter = step - graphPanel.step;
+                graphPanel.SetCounterText(counter.ToString());*/
+                graphPanel.SetCounterText(graphPanel.step.ToString());
 
                 if (graphPanel.step + graphPanel.graph.VertexNum <= step)
                 {
-                    if (graphPanel.step < step)
-                    {
-                        graphPanel.SetColor(MyColor.gray, MyColor.gray);
-                    }
-                    else
-                    {
-                        graphPanel.SetColor(MyColor.gray, MyColor.red);
-                    }
+                    graphPanel.targetColor = MyColor.gray;
+                    graphPanel.targetTextColor = MyColor.gray;
+
                 }
                 else if (graphPanel.step < step)
                 {
-                    graphPanel.SetColor(MyColor.green, MyColor.green);
+                    graphPanel.targetColor = MyColor.green;
+                    graphPanel.targetTextColor = MyColor.green;
                 }
                 else
                 {
-                    graphPanel.SetColor(MyColor.orange, MyColor.red);
+                    graphPanel.targetColor = MyColor.orange;
+                    graphPanel.targetTextColor = MyColor.orange;
                 }
 
                 count++;
@@ -252,11 +301,14 @@ public class Map : MonoBehaviour
         levelText.color = MyColor.cyan;
         stepText.text = step.ToString();
         stepText.color = MyColor.red;
+        scoreText.text = score.ToString();
+        scoreText.color = MyColor.green;
     }
 
     public void Create()
     {
         step = 0;
+        score = 0;
         foreach (Transform item in transform)
         {
             Destroy(item.gameObject);
@@ -273,11 +325,28 @@ public class Map : MonoBehaviour
         {
             var nodeObj = Instantiate(nodePrefab);
 
-            var theta = 2 * Mathf.PI / size * i;
-            Vector2 relPos = radius * new Vector2(Mathf.Sin(theta), Mathf.Cos(theta));
-            nodeObj.transform.localPosition = relPos;
+            Vector2 relPos;
+            if (pos.Count > i)
+            {
+                relPos = pos[i];
+            }
+            else
+            {
+                var theta = 2 * Mathf.PI / size * i;
+                relPos = radius * new Vector2(Mathf.Sin(theta), Mathf.Cos(theta));
+            }
+
             var node = nodeObj.GetComponent<Node>();
             node.Init(nodeObj, relPos);
+
+            if (colors.Count > i)
+            {
+                node.targetColor = colors[i];
+            }
+            else
+            {
+                node.targetColor = MyColor.white;
+            }
             graph.AddVertex(node.vertex);
         }
 
@@ -299,6 +368,7 @@ public class Map : MonoBehaviour
                     var link = linkObj.GetComponent<Link>();
                     link.targetScale = new Vector3((vi.Value.value.relPos - vj.Value.value.relPos).magnitude, 1, 1);
                     link.Init(vi.Value.value, vj.Value.value, linkObj);
+                    link.targetColor = MyColor.white;
                     vi.Value.AddNeighbor(vj.Value, link);
                 }
             }
@@ -306,8 +376,7 @@ public class Map : MonoBehaviour
         }
 
         var graphPanel = CreateGraphPanel(null, graph, 0);
-
-        RemoveNode();
+        Split(graphPanel);
 
         UpdateUI();
     }
@@ -337,8 +406,6 @@ public class Map : MonoBehaviour
             return graphPanels.Count == 0;
         }
     }
-
-    public int step = 0;
 
     public void UpdateStep()
     {
@@ -431,17 +498,29 @@ public class Map : MonoBehaviour
 
     public void AutoDelete()
     {
-        foreach (var graphPanel in graphPanels)
+        bool flag = false;
+
+        var cur = graphPanels.First;
+        while (cur != null)
         {
+            var next = cur.Next;
+
+            var graphPanel = cur.Value;
             if (graphPanel.step + graphPanel.graph.VertexNum <= step)
             {
+                //score += graphPanel.graph.VertexNum;
+                score++;
                 graphPanel.Hide();
                 graphPool.Return(graphPanel.graph);
                 graphPanels.Remove(graphPanel.node);
-
-                UpdateUI();
-                return;
+                flag = true;
             }
+            cur = next;
+        }
+
+        if (flag)
+        {
+            UpdateUI();
         }
     }
 }

@@ -42,7 +42,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _radius: 0.4
     - _smooth: 0.02
-    - _width: 1
+    - _width: 0.05
     m_Colors:
     - _color: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

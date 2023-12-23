@@ -12,6 +12,7 @@ public class GraphPanel : MonoBehaviour
     public TMP_Text counter;
     public LinkedListNode<GraphPanel> node;
 
+    public GameObject bg;
     public Renderer rend;
     private Material mat;
 
@@ -20,12 +21,20 @@ public class GraphPanel : MonoBehaviour
     public Vector3 targetScale;
     private Vector3 scaleVelocity;
 
+    public Color targetColor;
+    private Color curColor = MyColor.zero;
+    public Color targetTextColor;
+    private Color curTextColor = MyColor.zero;
+
     private float scaleErr = 0.15f;
 
     private void Update()
     {
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref followVelocity, 0.3f, float.MaxValue);
         transform.localScale = Vector3.SmoothDamp(transform.localScale, scaleErr * targetScale, ref scaleVelocity, 0.3f, float.MaxValue);
+        curColor = Color.Lerp(curColor, targetColor, 0.1f);
+        curTextColor = Color.Lerp(curTextColor, targetTextColor, 0.1f);
+        SetColor(curColor, curTextColor);
     }
 
     public void Init(Graph<Node, Link> _graph, int _step)
@@ -34,6 +43,7 @@ public class GraphPanel : MonoBehaviour
         step = _step;
         mat = rend.material;
 
+        SetColor(curColor, curTextColor);
         AddStep(0);
     }
 
@@ -47,12 +57,12 @@ public class GraphPanel : MonoBehaviour
         ui.localScale = size * Vector3.one;
     }
 
-    private void SetCounterText(string txt)
+    public void SetCounterText(string txt)
     {
         counter.text = txt;
     }
 
-    public void SetColor(Color color, Color textColor)
+    private void SetColor(Color color, Color textColor)
     {
         foreach (var rend in rends)
         {
@@ -67,7 +77,6 @@ public class GraphPanel : MonoBehaviour
     public void AddStep(int add)
     {
         step += add;
-        SetCounterText(step.ToString());
     }
 
     public void SetGraph(Graph<Node, Link> _graph)
@@ -88,6 +97,25 @@ public class GraphPanel : MonoBehaviour
 
     public void Hide()
     {
+        bg.SetActive(false);
+
+        foreach (var rend in rends)
+        {
+            rend.sortingLayerID = 0;
+            rend.sortingOrder = -1;
+        }
+
         targetScale = Vector3.zero;
+        targetColor = MyColor.zero;
+        targetTextColor = MyColor.zero;
+
+        foreach (var v in graph.Vertices)
+        {
+            v.Value.value.Hide();
+            foreach (var u in v.Value.Neighbors)
+            {
+                u.Value.value.Hide();
+            }
+        }
     }
 }
