@@ -10,7 +10,7 @@ public class MyColor
     public static Color orange = new(233/ 255f, 203/ 255f, 153/ 255f);
     public static Color yellow = new(244/ 255f, 255/ 255f, 62/ 255f);
     public static Color gray = Color.gray;
-    public static Color lightGrey = new(0.75f, 0.75f, 0.75f);
+    public static Color darkGrey = new(0.15f, 0.15f, 0.15f);
     public static Color black = Color.black;
     public static Color white = Color.white;
     public static Color zero = new(0, 0, 0, 0);

@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
     {
         map = GetComponent<Map>();
         Application.targetFrameRate = 60;
+        _camera.backgroundColor = MyColor.darkGrey;
     }
 
     private void Start()
@@ -37,7 +38,6 @@ public class Game : MonoBehaviour
             {
                 if (!next)
                 {
-                    _camera.backgroundColor = Color.black;
                     next = true;
                 }
                 else
@@ -47,10 +47,12 @@ public class Game : MonoBehaviour
 
                 if (timer < 0)
                 {
-                    /*map.NextLevel();
-                    NewGame();*/
+                    NewGame();
 
-                    EnterState(GameState.Menu);
+                    if (!map.zen || map.ZenWin || map.ZenLose)
+                    {
+                        EnterState(GameState.Menu);
+                    }
                 }
             }
         }
@@ -62,8 +64,10 @@ public class Game : MonoBehaviour
         win = false;
         next = false;
         timer = 1f;
-        //map.CreateLevel();
-        _camera.backgroundColor = Color.black;
+        if (map.zen)
+        {
+            map.CreateZenLevel();
+        }
     }
 
     public void EnterState(GameState newState)

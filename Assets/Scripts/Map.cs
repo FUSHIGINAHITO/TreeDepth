@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Map : MonoBehaviour
@@ -17,8 +16,9 @@ public class Map : MonoBehaviour
     private int levelPtr = 0;
     private int levelNum;
 
-    private bool zen = false;
+    public bool zen = false;
     private int curZenLv = 0;
+    private int maxZenLv = 99;
 
     private class LevelData
     {
@@ -207,7 +207,8 @@ public class Map : MonoBehaviour
     {
         curZenData.Clear();
 
-        var num = random.Next(4, 20);
+        var penalty = score / 10 - 1;
+        var num = Mathf.Clamp((random.Next(4, 15) + penalty), 0, 20);
         for (int i = 0; i < num; i++)
         {
 
@@ -217,7 +218,7 @@ public class Map : MonoBehaviour
             Shuffle(num - 1, shuffle);
 
             var r = Mathf.FloorToInt(-Mathf.Log(1 - (float)random.NextDouble() + 0.0001f));
-            var c = Mathf.Clamp(r, 1, num - 2);
+            var c = Mathf.Clamp(r + penalty, 1, num - 2);
             foreach (var v in shuffle)
             {
                 if (c > 0)
@@ -346,8 +347,16 @@ public class Map : MonoBehaviour
 
                 if (menu)
                 {
-                    graphPanel.SetCounterText(graphPanel.graph.VertexNum);
-                    graphPanel.SetCounter2Text(graphPanel.id);
+                    if (!graphPanel.isZenEntry)
+                    {
+                        graphPanel.SetCounterText(graphPanel.graph.VertexNum);
+                        graphPanel.SetCounter2Text(graphPanel.id);
+                    }
+                    else
+                    {
+                        graphPanel.SetCounterText("¿");
+                        graphPanel.SetCounter2Text("?");
+                    }
                 }
                 else
                 {
@@ -394,55 +403,74 @@ public class Map : MonoBehaviour
 
         if (!menu)
         {
-            UIManager.instance.stepValue.SetText(step);
-            UIManager.instance.stepValue.SetColor(MyColor.red);
-            UIManager.instance.scoreValue.SetText(score);
-            UIManager.instance.scoreValue.SetColor(MyColor.green);
+            if (!zen)
+            {
+                UIManager.instance.stepValue.SetText(step);
+                UIManager.instance.stepValue.SetColor(MyColor.red);
+            }
+            else
+            {
+                UIManager.instance.stepValue.SetText(score);
+                UIManager.instance.stepValue.SetColor(MyColor.green);
+            }
         }
     }
 
 
-    private void ClearData()
+    private void ClearPanels()
     {
-        step = 0;
-        score = 0;
-        foreach (Transform item in transform)
+        foreach (var graphPanel in graphPanels)
         {
-            Destroy(item.gameObject);
-        }
-        foreach (var item in graphPanels)
-        {
-            graphPool.Return(item.graph);
+            graphPanel.Hide();
+            graphPool.Return(graphPanel.graph);
         }
         graphPanels.Clear();
     }
 
-    public void CreateLevel()
+    public void CreateZenLevel()
     {
-        ClearData();
+        curZenLv++;
+        if (curZenLv <= maxZenLv)
+        {
+            GraphPanel zenPanel = null;
+            if (graphPanels.Count > 0)
+            {
+                zenPanel = graphPanels.Last.Value;
+                ClearPanels();
+                if (!zenPanel.isZenEntry)
+                {
+                    zenPanel = null;
+                }
+            }
 
-        var graph = CreateGraph(curData);
-        var graphPanel = CreateGraphPanel(null, graph, 0);
-        Split(graphPanel);
+            CreateZenData();
+            step = 0;
 
-        Restore();
+            var graph = CreateGraph(curZenData);
+            var graphPanel = CreateGraphPanel(zenPanel, graph, 0);
+            Split(graphPanel);
 
-        UpdateUI();
+            UIManager.instance.level.SetText($"Zen {curZenLv}");
+
+            UpdateUI();
+        }
     }
 
     public void Restore()
     {
         step = 0;
-        score = 0;
 
         if (!zen)
         {
-            UIManager.instance.level.SetText($"Level {levelPtr} - {curData.name}");
+            score = 0;
+            UIManager.instance.level.SetText($"#{levelPtr} - {curData.name}");
+            UIManager.instance.step.SetText("Depth");
         }
         else
         {
-            curZenLv = 1;
-            UIManager.instance.level.SetText($"Zen {curZenLv}");
+            score = 10;
+            curZenLv = 0;
+            UIManager.instance.step.SetText("Soul");
         }
     }
 
@@ -506,8 +534,25 @@ public class Map : MonoBehaviour
         }
     }
 
+    public bool ZenWin
+    {
+        get
+        {
+            return zen && curZenLv > maxZenLv;
+        }
+    }
+
+    public bool ZenLose
+    {
+        get
+        {
+            return zen && score < 0;
+        }
+    }
+
     private void UpdateStep()
     {
+        int old = step;
         foreach (var graphPanel in graphPanels)
         {
             if (graphPanel.step > step)
@@ -515,9 +560,13 @@ public class Map : MonoBehaviour
                 step = graphPanel.step;
             }
         }
+        if (step > old)
+        {
+            score -= step - old;
+        }
     }
 
-    private GraphPanel CreateGraphPanel(GraphPanel oldPanel, Graph<Node, Link> graph, int step)
+    private GraphPanel CreateGraphPanel(GraphPanel oldPanel, Graph<Node, Link> graph, int step, bool isZenEntry = false)
     {
         GameObject graphPanelRoot = Instantiate(graphPanelPrefab);
         graphPanelRoot.transform.parent = transform;
@@ -530,9 +579,9 @@ public class Map : MonoBehaviour
         }
         graphPanel.SetSize(2 * radius);
 
-        graphPanel.Init(graph, step);
+        graphPanel.Init(graph, step, isZenEntry);
 
-        if (oldPanel == null)
+        if (oldPanel == null || !graphPanels.Contains(oldPanel))
         {
             graphPanel.node = graphPanels.AddLast(graphPanel);
             graphPanel.id = graphPanels.Count;
@@ -686,7 +735,7 @@ public class Map : MonoBehaviour
 
     public void CreateMenu()
     {
-        ClearData();
+        ClearPanels();
 
         foreach (var data in allData)
         {
@@ -694,7 +743,7 @@ public class Map : MonoBehaviour
             CreateGraphPanel(null, graph, 0);
         }
 
-        CreateGraphPanel(null, graphPool.Require(), 0);
+        CreateGraphPanel(null, graphPool.Require(), 0, true);
 
         UpdateUI(true);
     }

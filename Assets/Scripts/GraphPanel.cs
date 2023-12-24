@@ -12,6 +12,7 @@ public class GraphPanel : MonoBehaviour
     public TMP_Text counter2;
     public LinkedListNode<GraphPanel> node;
     public int id;
+    public bool isZenEntry;
 
     public Renderer rend;
     private Material mat;
@@ -32,6 +33,8 @@ public class GraphPanel : MonoBehaviour
 
     private float scaleErr = 0.15f;
 
+    private bool discarded = false;
+
     private void Update()
     {
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref followVelocity, 0.3f, float.MaxValue);
@@ -40,12 +43,18 @@ public class GraphPanel : MonoBehaviour
         curTextColor = Color.Lerp(curTextColor, targetTextColor, 0.05f);
         curText2Color = Color.Lerp(curText2Color, targetText2Color, 0.05f);
         SetColor(curColor, curTextColor, curText2Color);
+
+        if (discarded && transform.localScale == Vector3.zero)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void Init(Graph<Node, Link> _graph, int _step)
+    public void Init(Graph<Node, Link> _graph, int _step, bool _isZenEntry)
     {
         SetGraph(_graph);
         step = _step;
+        isZenEntry = _isZenEntry;
         mat = rend.material;
         mat2 = rend2.material;
 
@@ -134,5 +143,7 @@ public class GraphPanel : MonoBehaviour
         {
             v.Value.value.Hide();
         }
+
+        discarded = true;
     }
 }
