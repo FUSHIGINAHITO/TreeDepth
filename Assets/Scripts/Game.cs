@@ -9,8 +9,8 @@ public class Game : MonoBehaviour
 
     public bool Started => started;
     private bool started = false;
-    public bool Win => win;
-    private bool win = false;
+    public bool Win => over;
+    private bool over = false;
     private Map map;
     private float timer;
     private bool next = false;
@@ -32,9 +32,16 @@ public class Game : MonoBehaviour
     {
         if (state == GameState.Level)
         {
-            win = map.Satisfied;
+            if (!map.zen)
+            {
+                over = map.Satisfied;
+            }
+            else
+            {
+                over = map.Satisfied || map.ZenWin || map.ZenLose;
+            }
 
-            if (win)
+            if (over)
             {
                 if (!next)
                 {
@@ -47,11 +54,14 @@ public class Game : MonoBehaviour
 
                 if (timer < 0)
                 {
-                    NewGame();
-
                     if (!map.zen || map.ZenWin || map.ZenLose)
                     {
+                        map.UpdateArchive(false);
                         EnterState(GameState.Menu);
+                    }
+                    else
+                    {
+                        NewGame();
                     }
                 }
             }
@@ -61,7 +71,7 @@ public class Game : MonoBehaviour
     public void NewGame()
     {
         started = true;
-        win = false;
+        over = false;
         next = false;
         timer = 1f;
         if (map.zen)

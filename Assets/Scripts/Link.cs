@@ -53,8 +53,6 @@ public class Link : MonoBehaviour
             }
         }
 
-
-
         curColorOrigin = Color.Lerp(curColorOrigin, origin.targetColor, 0.05f);
         curColorTarget = Color.Lerp(curColorTarget, target.targetColor, 0.05f);
         SetColor(curColorOrigin, curColorTarget);

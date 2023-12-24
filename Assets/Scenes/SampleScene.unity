@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 914235632}
   - component: {fileID: 914235631}
   - component: {fileID: 914235635}
+  - component: {fileID: 914235636}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -695,10 +696,12 @@ MonoBehaviour:
   nodePrefab: {fileID: 3619180988190779634, guid: 68690fc0df066194e83edb34ba412040, type: 3}
   linkPrefab: {fileID: 2198443623129884937, guid: 9bf24027edd299844abb70c2a5322a3d, type: 3}
   graphPanelPrefab: {fileID: 4553404489878033877, guid: 353df924f3ac1e74d9fa52f021ff58b0, type: 3}
+  debug: 1
   H: 7
   W: 16
   res: []
   zen: 0
+  maxZenLevel: 99
   step: 0
 --- !u!114 &914235633
 MonoBehaviour:
@@ -750,6 +753,24 @@ MonoBehaviour:
   scoreValue: {fileID: 1856320207}
   step: {fileID: 478420763}
   stepValue: {fileID: 529190464}
+--- !u!114 &914235636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914235630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b0e39ba53ea5d48b11909aaaea96c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 0}
+  archive:
+    maxLevel: -1
+    zenMaxScore: -1
+    zenMaxLevel: -1
+    levelData: []
 --- !u!1 &969786765
 GameObject:
   m_ObjectHideFlags: 0

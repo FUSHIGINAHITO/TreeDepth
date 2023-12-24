@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
     {
         if (game.State == GameState.Level && !game.Win)
         {
+            map.UpdateArchive(true);
             game.EnterState(GameState.Menu);
             timer = 1;
         }

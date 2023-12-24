@@ -8,17 +8,18 @@ public class Map : MonoBehaviour
     public GameObject nodePrefab;
     public GameObject linkPrefab;
     public GameObject graphPanelPrefab;
+    public bool debug = false;
 
     public float H = 50;
     public float W = 70;
     public List<Vector2> res = new();
 
-    private int levelPtr = 0;
+    private int curLevel = 0;
     private int levelNum;
 
     public bool zen = false;
-    private int curZenLv = 0;
-    private int maxZenLv = 99;
+    private int curZenLevel = 0;
+    public int maxZenLevel = 99;
 
     private class LevelData
     {
@@ -94,6 +95,10 @@ public class Map : MonoBehaviour
     private void Awake()
     {
         LoadAllLevelData();
+
+#if !UNITY_EDITOR
+        debug = false;
+#endif
     }
 
     private void LoadAllLevelData()
@@ -207,8 +212,8 @@ public class Map : MonoBehaviour
     {
         curZenData.Clear();
 
-        var penalty = score / 10 - 1;
-        var num = Mathf.Clamp((random.Next(4, 15) + penalty), 0, 20);
+        var penalty = 2 * ((score - 10) / 10) + 1;
+        var num = Mathf.Clamp(random.Next(7, 15) + penalty, 0, 20);
         for (int i = 0; i < num; i++)
         {
 
@@ -268,6 +273,8 @@ public class Map : MonoBehaviour
         node.Remove();
 
         node.graphPanel.AddStep(1);
+
+        score--;
 
         UpdateStep();
 
@@ -349,13 +356,37 @@ public class Map : MonoBehaviour
                 {
                     if (!graphPanel.isZenEntry)
                     {
-                        graphPanel.SetCounterText(graphPanel.graph.VertexNum);
+                        var minStep = ArchiveManager.instance.archive.GetStep(graphPanel.id);
+                        if (minStep != null)
+                        {
+                            graphPanel.SetCounterText(minStep.Value);
+                            graphPanel.targetTextColor = MyColor.red;
+                            graphPanel.targetColor = MyColor.orange;
+                        }
+                        else
+                        {
+                            graphPanel.SetCounterText(graphPanel.graph.VertexNum);
+                            graphPanel.targetTextColor = MyColor.gray;
+                            graphPanel.targetColor = MyColor.gray;
+                        }
                         graphPanel.SetCounter2Text(graphPanel.id);
                     }
                     else
                     {
-                        graphPanel.SetCounterText("¿");
-                        graphPanel.SetCounter2Text("?");
+                        var maxZen = ArchiveManager.instance.archive.ZenMaxLevel;
+                        if (maxZen >= 0)
+                        {
+                            graphPanel.SetCounterText(maxZen);
+                            graphPanel.targetTextColor = MyColor.red;
+                            graphPanel.targetColor = MyColor.cyan;
+                        }
+                        else
+                        {
+                            graphPanel.SetCounterText("?");
+                            graphPanel.targetTextColor = MyColor.gray;
+                            graphPanel.targetColor = MyColor.gray;
+                        }
+                        graphPanel.SetCounter2Text("¿");
                     }
                 }
                 else
@@ -366,8 +397,6 @@ public class Map : MonoBehaviour
 
                 if (menu)
                 {
-                    graphPanel.targetColor = MyColor.orange;
-                    graphPanel.targetTextColor = MyColor.red;
                     graphPanel.targetText2Color = MyColor.green;
                 }
                 else
@@ -429,8 +458,8 @@ public class Map : MonoBehaviour
 
     public void CreateZenLevel()
     {
-        curZenLv++;
-        if (curZenLv <= maxZenLv)
+        curZenLevel++;
+        if (curZenLevel <= maxZenLevel)
         {
             GraphPanel zenPanel = null;
             if (graphPanels.Count > 0)
@@ -450,7 +479,7 @@ public class Map : MonoBehaviour
             var graphPanel = CreateGraphPanel(zenPanel, graph, 0);
             Split(graphPanel);
 
-            UIManager.instance.level.SetText($"Zen {curZenLv}");
+            UIManager.instance.level.SetText($"Zen {curZenLevel}");
 
             UpdateUI();
         }
@@ -463,24 +492,24 @@ public class Map : MonoBehaviour
         if (!zen)
         {
             score = 0;
-            UIManager.instance.level.SetText($"#{levelPtr} - {curData.name}");
+            UIManager.instance.level.SetText($"#{curLevel} - {curData.name}");
             UIManager.instance.step.SetText("Depth");
         }
         else
         {
             score = 10;
-            curZenLv = 0;
+            curZenLevel = 0;
             UIManager.instance.step.SetText("Soul");
         }
     }
 
     public void ChooseLevel(GraphPanel graphPanel)
     {
-        levelPtr = graphPanel.id;
+        curLevel = graphPanel.id;
 
-        if (levelPtr < levelNum)
+        if (curLevel <= levelNum)
         {
-            curData = allData[levelPtr - 1];
+            curData = allData[curLevel - 1];
             zen = false;
         }
         else
@@ -538,7 +567,7 @@ public class Map : MonoBehaviour
     {
         get
         {
-            return zen && curZenLv > maxZenLv;
+            return zen && curZenLevel > maxZenLevel;
         }
     }
 
@@ -562,7 +591,7 @@ public class Map : MonoBehaviour
         }
         if (step > old)
         {
-            score -= step - old;
+            //score -= step - old;
         }
     }
 
@@ -737,14 +766,69 @@ public class Map : MonoBehaviour
     {
         ClearPanels();
 
-        foreach (var data in allData)
+        var maxLevel = ArchiveManager.instance.archive.MaxLevel;
+        var zenUnlock = false;
+        if (maxLevel < 0)
         {
-            var graph = CreateGraph(data);
-            CreateGraphPanel(null, graph, 0);
+            maxLevel = 1;
+        }
+        else
+        {
+            if (maxLevel == levelNum)
+            {
+                zenUnlock = true;
+            }
+            maxLevel++;
+        }
+        maxLevel = Mathf.Max(6, maxLevel);
+
+        if (debug)
+        {
+            maxLevel = int.MaxValue;
+            zenUnlock = true;
         }
 
-        CreateGraphPanel(null, graphPool.Require(), 0, true);
+        foreach (var data in allData)
+        {
+            if (maxLevel > 0)
+            {
+                var graph = CreateGraph(data);
+                CreateGraphPanel(null, graph, 0);
+                maxLevel--;
+            }
+        }
+
+        if (zenUnlock)
+        {
+            CreateGraphPanel(null, graphPool.Require(), 0, true);
+        }
 
         UpdateUI(true);
+    }
+
+    public void UpdateArchive(bool forceOver)
+    {
+        if (!forceOver)
+        {
+            if (zen)
+            {
+                ArchiveManager.instance.archive.ZenMaxLevel = curZenLevel;
+                ArchiveManager.instance.archive.ZenMaxScore = score;
+            }
+            else
+            {
+                ArchiveManager.instance.archive.MaxLevel = curLevel;
+                ArchiveManager.instance.archive.SetStep(curLevel, step);
+            }
+        }
+        else
+        {
+            if (zen)
+            {
+                ArchiveManager.instance.archive.ZenMaxLevel = curZenLevel - 1;
+            }
+        }
+
+        ArchiveManager.instance.SaveArchive();
     }
 }
