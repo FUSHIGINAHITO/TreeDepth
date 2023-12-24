@@ -44,6 +44,8 @@ Material:
     - _shineStrength: 0
     - _shineWidth: 0
     - _smooth: 0.02
+    - _truncate: 0.38
+    - _trunctateStart: -0.77
     - _width: 0.05
     m_Colors:
     - _color: {r: 1, g: 1, b: 1, a: 0}

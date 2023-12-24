@@ -1,0 +1,23 @@
+﻿Path P(8)
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-3.9215291751105283, -4.20433193896238) {1};
+\node[main_node] (1) at (-2.752514866248248, -3.021710891214161) {2};
+\node[main_node] (2) at (-1.5711729026415782, -1.844757194268678) {3};
+\node[main_node] (3) at (0.8029341570218715, 0.5134404202963063) {4};
+\node[main_node] (4) at (1.9878820212086643, 1.6938109421213543) {5};
+\node[main_node] (5) at (3.1692331268479497, 2.871278415036209) {6};
+\node[main_node] (6) at (4.344432921437782, 4.048128376523401) {7};
+\node[main_node] (7) at (-0.38434404857259796, -0.6667125910209126) {8};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (7) 
+(7) edge node {} (3) 
+(3) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+;
+
+\end{tikzpicture}

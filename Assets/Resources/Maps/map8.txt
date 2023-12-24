@@ -1,0 +1,25 @@
+﻿Star S(8)
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (4.942857142857143, -0.14285714285714235) {};
+\node[main_node] (1) at (-0.057142857142857384, 4.857142857142858) {};
+\node[main_node] (2) at (-3.5943433615564757, 3.3943433615564764) {};
+\node[main_node] (3) at (-0.057142857142857384, -0.14285714285714235) {};
+\node[main_node] (4) at (-4.857142857142858, -0.128571428571429) {};
+\node[main_node] (5) at (-0.057142857142857384, -5.142857142857142) {};
+\node[main_node] (6) at (-3.5943433615564757, -3.6769050621509627) {};
+\node[main_node] (7) at (3.480057647270762, -3.6911907764366774) {};
+\node[main_node] (8) at (3.480057647270762, 3.3943433615564764) {};
+
+ \path[draw, thick]
+(0) edge node {} (3) 
+(1) edge node {} (3) 
+(2) edge node {} (3) 
+(3) edge node {} (4) 
+(3) edge node {} (5) 
+(3) edge node {} (6) 
+(3) edge node {} (7) 
+(3) edge node {} (8) 
+;
+
+\end{tikzpicture}

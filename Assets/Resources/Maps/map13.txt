@@ -1,0 +1,23 @@
+﻿Complete Bipartite Graph K(3, 3)
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-4.185714285714286, 4.057142857142857) {};
+\node[main_node] (1) at (-4.142857142857142, 0.08571450369698663) {};
+\node[main_node] (2) at (-4.128571428571428, -4.199999782017299) {};
+\node[main_node] (3) at (4.414285714285715, 4.057142857142857) {};
+\node[main_node] (4) at (4.2857142857142865, 0.07142878941127195) {};
+\node[main_node] (5) at (4.357142857142858, -4.228571210588727) {};
+
+ \path[draw, thick]
+(0) edge node {} (3) 
+(0) edge node {} (4) 
+(0) edge node {} (5) 
+(3) edge node {} (1) 
+(3) edge node {} (2) 
+(1) edge node {} (4) 
+(5) edge node {} (1) 
+(4) edge node {} (2) 
+(2) edge node {} (5) 
+;
+
+\end{tikzpicture}

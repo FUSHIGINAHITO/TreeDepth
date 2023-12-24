@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -10,11 +9,14 @@ public class GraphPanel : MonoBehaviour
     public Transform ui;
     public List<SpriteRenderer> rends;
     public TMP_Text counter;
+    public TMP_Text counter2;
     public LinkedListNode<GraphPanel> node;
+    public int id;
 
-    public GameObject bg;
     public Renderer rend;
     private Material mat;
+    public Renderer rend2;
+    private Material mat2;
 
     public Vector3 targetPos;
     private Vector3 followVelocity;
@@ -25,6 +27,8 @@ public class GraphPanel : MonoBehaviour
     private Color curColor = MyColor.zero;
     public Color targetTextColor;
     private Color curTextColor = MyColor.zero;
+    public Color targetText2Color;
+    private Color curText2Color = MyColor.zero;
 
     private float scaleErr = 0.15f;
 
@@ -32,9 +36,10 @@ public class GraphPanel : MonoBehaviour
     {
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref followVelocity, 0.3f, float.MaxValue);
         transform.localScale = Vector3.SmoothDamp(transform.localScale, scaleErr * targetScale, ref scaleVelocity, 0.3f, float.MaxValue);
-        curColor = Color.Lerp(curColor, targetColor, 0.1f);
-        curTextColor = Color.Lerp(curTextColor, targetTextColor, 0.1f);
-        SetColor(curColor, curTextColor);
+        curColor = Color.Lerp(curColor, targetColor, 0.05f);
+        curTextColor = Color.Lerp(curTextColor, targetTextColor, 0.05f);
+        curText2Color = Color.Lerp(curText2Color, targetText2Color, 0.05f);
+        SetColor(curColor, curTextColor, curText2Color);
     }
 
     public void Init(Graph<Node, Link> _graph, int _step)
@@ -42,14 +47,16 @@ public class GraphPanel : MonoBehaviour
         SetGraph(_graph);
         step = _step;
         mat = rend.material;
+        mat2 = rend2.material;
 
-        SetColor(curColor, curTextColor);
+        SetColor(curColor, curTextColor, curText2Color);
         AddStep(0);
     }
 
     private void OnDestroy()
     {
         Destroy(mat);
+        Destroy(mat2);
     }
 
     public void SetSize(float size)
@@ -57,12 +64,17 @@ public class GraphPanel : MonoBehaviour
         ui.localScale = size * Vector3.one;
     }
 
-    public void SetCounterText(string txt)
+    public void SetCounterText(object txt)
     {
-        counter.text = txt;
+        counter.text = txt.ToString();
     }
 
-    private void SetColor(Color color, Color textColor)
+    public void SetCounter2Text(object txt)
+    {
+        counter2.text = txt.ToString();
+    }
+
+    private void SetColor(Color color, Color textColor, Color text2Color)
     {
         foreach (var rend in rends)
         {
@@ -70,8 +82,10 @@ public class GraphPanel : MonoBehaviour
         }
 
         mat.SetColor("_color", color);
+        mat2.SetColor("_color", color);
 
         counter.color = textColor;
+        counter2.color = text2Color;
     }
 
     public void AddStep(int add)
@@ -95,10 +109,16 @@ public class GraphPanel : MonoBehaviour
         }
     }
 
+    public void AutoSetColor()
+    {
+        foreach (var v in graph.Vertices)
+        {
+            v.Value.value.AutoSetColor();
+        }
+    }
+
     public void Hide()
     {
-        bg.SetActive(false);
-
         foreach (var rend in rends)
         {
             rend.sortingLayerID = 0;
@@ -108,14 +128,11 @@ public class GraphPanel : MonoBehaviour
         targetScale = Vector3.zero;
         targetColor = MyColor.zero;
         targetTextColor = MyColor.zero;
+        targetText2Color = MyColor.zero;
 
         foreach (var v in graph.Vertices)
         {
             v.Value.value.Hide();
-            foreach (var u in v.Value.Neighbors)
-            {
-                u.Value.value.Hide();
-            }
         }
     }
 }

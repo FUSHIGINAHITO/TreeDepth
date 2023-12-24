@@ -1,0 +1,46 @@
+﻿Goldner-Harary Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-4.656119967900333, -1.8753552338026402) {1};
+\node[main_node] (1) at (0.07231693931856853, 4.69047611781529) {2};
+\node[main_node] (2) at (0.09748864455257866, 2.486679498022517) {3};
+\node[main_node] (3) at (-1.1250779132215103, 0.38515919006034904) {4};
+\node[main_node] (4) at (-1.0366980984651055, -1.2814893362492599) {5};
+\node[main_node] (5) at (1.2386744798871794, 0.5051791596747885) {6};
+\node[main_node] (6) at (1.414129281441542, -1.2626032237807363) {7};
+\node[main_node] (7) at (0.12640757110148826, 0.09613893898795034) {8};
+\node[main_node] (8) at (0.22640687886411648, -3.177433049899124) {9};
+\node[main_node] (9) at (0.2969673933736763, -4.909523882184709) {10};
+\node[main_node] (10) at (4.885714285714286, -1.753269392931851) {11};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(0) edge node {} (2) 
+(0) edge node {} (3) 
+(0) edge node {} (4) 
+(0) edge node {} (7) 
+(0) edge node {} (8) 
+(0) edge node {} (9) 
+(0) edge node {} (10) 
+(1) edge node {} (2) 
+(1) edge node {} (10) 
+(2) edge node {} (3) 
+(2) edge node {} (5) 
+(2) edge node {} (7) 
+(2) edge node {} (10) 
+(3) edge node {} (7) 
+(4) edge node {} (7) 
+(4) edge node {} (8) 
+(5) edge node {} (7) 
+(5) edge node {} (10) 
+(6) edge node {} (7) 
+(6) edge node {} (8) 
+(6) edge node {} (10) 
+(7) edge node {} (8) 
+(7) edge node {} (10) 
+(8) edge node {} (9) 
+(8) edge node {} (10) 
+(9) edge node {} (10) 
+;
+
+\end{tikzpicture}

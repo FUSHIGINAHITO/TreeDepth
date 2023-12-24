@@ -1,0 +1,43 @@
+﻿Wall of Height 2
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-4.657359793200493, 1.6567358002130605) {1};
+\node[main_node] (1) at (-2.8145732265134207, 1.6406168542585862) {2};
+\node[main_node] (2) at (-0.9718042395317941, 1.622600345154841) {3};
+\node[main_node] (3) at (0.8710203054895143, 1.6116536669699153) {4};
+\node[main_node] (4) at (2.7138386564106476, 1.5997050949981408) {5};
+\node[main_node] (5) at (-4.63471501048028, -0.18598215410921526) {6};
+\node[main_node] (6) at (-2.7919317058665793, -0.20210038427716803) {7};
+\node[main_node] (7) at (-0.9491680771669091, -0.22011776330540123) {8};
+\node[main_node] (8) at (0.8936498419127865, -0.2310645425500466) {9};
+\node[main_node] (9) at (2.7364627211476256, -0.24301321194118675) {10};
+\node[main_node] (10) at (4.579312206500019, -0.24696791044040456) {11};
+\node[main_node] (11) at (-2.7897699682353103, -2.044955371581856) {12};
+\node[main_node] (12) at (-0.9470018704406087, -2.0629736217752406) {13};
+\node[main_node] (13) at (0.8958213425249255, -2.0739204092213157) {14};
+\node[main_node] (14) at (2.7386383634155456, -2.0858690719502206) {15};
+\node[main_node] (15) at (4.5814903720423175, -2.0898237591361717) {16};
+
+ \path[draw, thick]
+(5) edge node {} (6) 
+(0) edge node {} (1) 
+(0) edge node {} (5) 
+(1) edge node {} (2) 
+(2) edge node {} (3) 
+(3) edge node {} (4) 
+(10) edge node {} (9) 
+(9) edge node {} (8) 
+(8) edge node {} (7) 
+(7) edge node {} (6) 
+(2) edge node {} (7) 
+(4) edge node {} (9) 
+(6) edge node {} (11) 
+(11) edge node {} (12) 
+(12) edge node {} (13) 
+(13) edge node {} (8) 
+(13) edge node {} (14) 
+(14) edge node {} (15) 
+(15) edge node {} (10) 
+;
+
+\end{tikzpicture}

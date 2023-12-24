@@ -44,7 +44,9 @@ Material:
     - _shineStrength: 0
     - _shineWidth: 0
     - _smooth: 0.02
-    - _width: 1
+    - _truncate: 0.37
+    - _trunctateStart: 2.28
+    - _width: 0.05
     m_Colors:
-    - _color: {r: 0, g: 0, b: 0, a: 0}
+    - _color: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

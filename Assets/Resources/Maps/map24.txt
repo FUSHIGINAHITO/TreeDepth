@@ -1,0 +1,33 @@
+﻿Half Graph H(5)
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-4.857142857142858, 3.157142857142857) {1};
+\node[main_node] (1) at (-2.4000000000000004, 3.128571428571428) {2};
+\node[main_node] (2) at (-0.057142857142857384, 3.114285714285714) {3};
+\node[main_node] (3) at (2.4142857142857146, 3.114285714285714) {4};
+\node[main_node] (4) at (4.828571428571429, 3.1428571428571423) {5};
+\node[main_node] (5) at (-4.857142857142858, -3.799999782017299) {6};
+\node[main_node] (6) at (-2.2857142857142865, -3.757142639160156) {7};
+\node[main_node] (7) at (0.128571428571429, -3.77142835344587) {8};
+\node[main_node] (8) at (2.557142857142857, -3.7857140677315844) {9};
+\node[main_node] (9) at (4.828571428571429, -3.8285712105887284) {10};
+
+ \path[draw, thick]
+(0) edge node {} (5) 
+(0) edge node {} (6) 
+(0) edge node {} (7) 
+(0) edge node {} (8) 
+(0) edge node {} (9) 
+(1) edge node {} (6) 
+(1) edge node {} (7) 
+(1) edge node {} (8) 
+(1) edge node {} (9) 
+(2) edge node {} (7) 
+(2) edge node {} (8) 
+(3) edge node {} (8) 
+(2) edge node {} (9) 
+(3) edge node {} (9) 
+(4) edge node {} (9) 
+;
+
+\end{tikzpicture}

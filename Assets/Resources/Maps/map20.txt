@@ -1,0 +1,36 @@
+﻿Golomb Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (2.069281856267752, 1.6665096479432524) {1};
+\node[main_node] (1) at (-2.714283500975717, 0.21205082363006333) {2};
+\node[main_node] (2) at (0.9391165734242009, -3.2032105125429804) {3};
+\node[main_node] (3) at (-2.4110800747992265, 3.8857476304332335) {4};
+\node[main_node] (4) at (-4.9, -0.4513311013888668) {5};
+\node[main_node] (5) at (0.09921379097648586, -0.43864138443948697) {6};
+\node[main_node] (6) at (2.5888797528900174, 3.8978068223432274) {7};
+\node[main_node] (7) at (-2.3892496405979537, -4.776103913456925) {8};
+\node[main_node] (8) at (2.610319601236217, -4.762729560190987) {9};
+\node[main_node] (9) at (5.098647384771811, -0.42659555075609923) {10};
+
+ \path[draw, thick]
+(0) edge node {} (3) 
+(3) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+(6) edge node {} (9) 
+(9) edge node {} (8) 
+(8) edge node {} (7) 
+(7) edge node {} (4) 
+(3) edge node {} (6) 
+(3) edge node {} (5) 
+(5) edge node {} (7) 
+(5) edge node {} (8) 
+(5) edge node {} (9) 
+(7) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (9) 
+(0) edge node {} (1) 
+(0) edge node {} (2) 
+;
+
+\end{tikzpicture}

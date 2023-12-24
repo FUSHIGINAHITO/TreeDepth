@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Node : MonoBehaviour
 {
@@ -9,9 +7,11 @@ public class Node : MonoBehaviour
     public Graph<Node, Link>.Vertex vertex;
     public GraphPanel graphPanel;
     public Collider2D cld;
+    public int id;
 
     public Renderer rend;
     private Material mat;
+    public bool autoColor = true;
     public Color targetColor;
     private Color curColor = MyColor.zero;
 
@@ -30,7 +30,7 @@ public class Node : MonoBehaviour
         Destroy(mat);
     }
 
-    public void Init(GameObject _obj, Vector2 pos)
+    public void Init(GameObject _obj, Vector2 pos, int _id)
     {
         obj = _obj;
         relPos = pos;
@@ -39,6 +39,8 @@ public class Node : MonoBehaviour
         cld = GetComponent<Collider2D>();
         mat = rend.material;
         SetColor(curColor);
+        targetColor = MyColor.white;
+        id = _id;
     }
 
     public void Remove()
@@ -57,5 +59,21 @@ public class Node : MonoBehaviour
     private void SetColor(Color color)
     {
         mat.SetColor("_color", color);
+    }
+
+    public void AutoSetColor()
+    {
+        if (autoColor)
+        {
+            float t = 1;
+            float maxDeg = graphPanel.graph.MaxDegree;
+            float minDeg = graphPanel.graph.MinDegree;
+            if (maxDeg - minDeg > 0)
+            {
+                t = (vertex.Degree - minDeg) / (maxDeg - minDeg);
+            }
+
+            targetColor = Color.Lerp(MyColor.gray, MyColor.white, t);
+        }
     }
 }

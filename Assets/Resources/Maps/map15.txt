@@ -1,0 +1,33 @@
+﻿Petersen Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (0.18571428571428594, 4.728571428571428) {};
+\node[main_node] (1) at (-4.6571428571428575, 0.9285716465541292) {};
+\node[main_node] (2) at (4.942857142857143, 1.0571430751255575) {};
+\node[main_node] (3) at (-2.3, -4.285714067731586) {};
+\node[main_node] (4) at (3.1999999999999993, -4.214285496303013) {};
+\node[main_node] (5) at (0.22857142857142954, 2.1571428571428575) {};
+\node[main_node] (6) at (-1.9285714285714286, 0.44285736083984384) {};
+\node[main_node] (7) at (2.4000000000000004, 0.5285716465541301) {};
+\node[main_node] (8) at (-0.9571428571428569, -2.2428569248744425) {};
+\node[main_node] (9) at (1.7428571428571429, -2.214285496303013) {};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (3) 
+(3) edge node {} (4) 
+(4) edge node {} (2) 
+(2) edge node {} (0) 
+(1) edge node {} (6) 
+(8) edge node {} (3) 
+(9) edge node {} (4) 
+(9) edge node {} (5) 
+(5) edge node {} (8) 
+(8) edge node {} (7) 
+(6) edge node {} (7) 
+(6) edge node {} (9) 
+(0) edge node {} (5) 
+(7) edge node {} (2) 
+;
+
+\end{tikzpicture}

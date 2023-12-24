@@ -1,0 +1,14 @@
+﻿Triangle Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (0.08571428571428541, 3.7428571428571433) {};
+\node[main_node] (1) at (-4.685714285714285, -3.8999997820172996) {};
+\node[main_node] (2) at (4.914285714285715, -3.87142835344587) {};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (0) 
+;
+
+\end{tikzpicture}

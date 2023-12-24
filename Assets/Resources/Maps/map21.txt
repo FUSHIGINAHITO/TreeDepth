@@ -1,0 +1,37 @@
+﻿Herschel Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (0.09999999999999876, -5.171428571428571) {1};
+\node[main_node] (1) at (-1.0050724637681197, -2.190062111801236) {2};
+\node[main_node] (2) at (-4.9, -0.17142857142857348) {3};
+\node[main_node] (3) at (0.09999999999999787, -0.16884057971014776) {4};
+\node[main_node] (4) at (5.099999999999996, -0.17142857142857348) {5};
+\node[main_node] (5) at (-1.0050724637681165, 1.8472049689440944) {6};
+\node[main_node] (6) at (1.2050724637681112, 1.8472049689440944) {7};
+\node[main_node] (7) at (0.09999999999999698, 4.828571428571429) {8};
+\node[main_node] (8) at (-2.8063146997929636, -0.17401656314700276) {9};
+\node[main_node] (9) at (3.008902691511386, -0.17142857142856993) {10};
+\node[main_node] (10) at (1.2050724637681132, -2.190062111801235) {11};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(0) edge node {} (2) 
+(0) edge node {} (4) 
+(0) edge node {} (10) 
+(1) edge node {} (3) 
+(1) edge node {} (8) 
+(2) edge node {} (7) 
+(2) edge node {} (8) 
+(3) edge node {} (5) 
+(3) edge node {} (6) 
+(3) edge node {} (10) 
+(4) edge node {} (7) 
+(4) edge node {} (9) 
+(5) edge node {} (7) 
+(5) edge node {} (8) 
+(6) edge node {} (7) 
+(6) edge node {} (9) 
+(9) edge node {} (10) 
+;
+
+\end{tikzpicture}

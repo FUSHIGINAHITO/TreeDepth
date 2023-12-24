@@ -1,0 +1,26 @@
+﻿Moser Spindle
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-0.019865428965729848, 4.241552437809622) {1};
+\node[main_node] (1) at (-3.9452400216854855, 1.3893480792442945) {2};
+\node[main_node] (2) at (-1.343431744859381, -0.007131061275799766) {3};
+\node[main_node] (3) at (1.2839805390532923, 0.05251553739833659) {4};
+\node[main_node] (4) at (3.8129636585629902, 1.570412661446934) {5};
+\node[main_node] (5) at (4.885714285714286, -2.8958005203895922) {6};
+\node[main_node] (6) at (-4.7142857142857135, -2.9285712105887276) {7};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(0) edge node {} (2) 
+(0) edge node {} (3) 
+(0) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (3) 
+(3) edge node {} (4) 
+(2) edge node {} (6) 
+(1) edge node {} (6) 
+(6) edge node {} (5) 
+;
+
+\end{tikzpicture}

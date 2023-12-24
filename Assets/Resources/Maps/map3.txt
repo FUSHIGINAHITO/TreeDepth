@@ -1,0 +1,19 @@
+﻿Butterfly Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-4.314285714285714, 3.1000000000000005) {};
+\node[main_node] (1) at (-4.271428571428572, -2.214285496303013) {};
+\node[main_node] (2) at (0.08571428571428541, 0.4142859322684149) {};
+\node[main_node] (3) at (4.4714285714285715, 3.114285714285714) {};
+\node[main_node] (4) at (4.514285714285714, -2.214285496303013) {};
+
+ \path[draw, thick]
+(0) edge node {} (2) 
+(2) edge node {} (3) 
+(2) edge node {} (4) 
+(2) edge node {} (1) 
+(1) edge node {} (0) 
+(3) edge node {} (4) 
+;
+
+\end{tikzpicture}

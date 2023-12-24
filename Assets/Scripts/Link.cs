@@ -9,10 +9,8 @@ public class Link : MonoBehaviour
     public GameObject obj;
     public Renderer rend;
     private Material mat;
-    public Color targetColorLeft;
-    private Color curColorLeft = MyColor.zero;    
-    public Color targetColorRight;
-    private Color curColorRight = MyColor.zero;
+    private Color curColorOrigin = MyColor.zero;
+    private Color curColorTarget = MyColor.zero;
 
     public float targetLeftFill = 1;
     public float curLeftFill = 1;
@@ -29,7 +27,7 @@ public class Link : MonoBehaviour
         target = _target;
         obj = _obj;
         mat = rend.material;
-        SetColor(curColorLeft, curColorRight);
+        SetColor(curColorOrigin, curColorTarget);
     }
 
     private void OnDestroy()
@@ -55,9 +53,11 @@ public class Link : MonoBehaviour
             }
         }
 
-        curColorLeft = Color.Lerp(curColorLeft, targetColorLeft, 0.05f);
-        curColorRight = Color.Lerp(curColorRight, targetColorRight, 0.05f);
-        SetColor(curColorLeft, curColorRight);
+
+
+        curColorOrigin = Color.Lerp(curColorOrigin, origin.targetColor, 0.05f);
+        curColorTarget = Color.Lerp(curColorTarget, target.targetColor, 0.05f);
+        SetColor(curColorOrigin, curColorTarget);
     }
 
     public void Hide(Node node)
@@ -70,19 +70,11 @@ public class Link : MonoBehaviour
         {
             targetRightFill = 0;
         }
-
-        Hide();
     }
 
-    public void Hide()
+    private void SetColor(Color colorOrigin, Color colorTarget)
     {
-        targetColorLeft = MyColor.zero;
-        targetColorRight = MyColor.zero;
-    }
-
-    private void SetColor(Color colorLeft, Color colorRight)
-    {
-        mat.SetColor("_color", colorLeft);
-        mat.SetColor("_color2", colorRight);
+        mat.SetColor("_color", colorOrigin);
+        mat.SetColor("_color2", colorTarget);
     }
 }

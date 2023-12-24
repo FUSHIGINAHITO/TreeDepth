@@ -1,0 +1,26 @@
+﻿Octahedron
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-0.013484178651148593, 4.153378395934421) {1};
+\node[main_node] (1) at (-4.2601507229519715, -0.1432132516841378) {2};
+\node[main_node] (2) at (0.5328848368681065, -0.8706141397729796) {3};
+\node[main_node] (3) at (4.276116496667463, -0.0889813102344652) {4};
+\node[main_node] (4) at (-0.5908257320029273, 0.618354567966958) {5};
+\node[main_node] (5) at (0.033859640427856164, -4.376816569921818) {6};
+
+ \path[draw, thick]
+(0) edge node {} (2) 
+(0) edge node {} (4) 
+(0) edge node {} (3) 
+(1) edge node {} (0) 
+(1) edge node {} (4) 
+(4) edge node {} (3) 
+(3) edge node {} (2) 
+(2) edge node {} (1) 
+(1) edge node {} (5) 
+(5) edge node {} (4) 
+(5) edge node {} (3) 
+(2) edge node {} (5) 
+;
+
+\end{tikzpicture}

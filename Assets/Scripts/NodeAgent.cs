@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NodeAgent : MonoBehaviour
 {
-    public MyColor.ColorEnum color;
+    public ColorEnum color;
     public SpriteRenderer rend;
     public TMP_Text idText;
 

@@ -42,7 +42,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _radius: 0.3
     - _shineStrength: 0
-    - _shineWidth: 0.1
+    - _shineWidth: 0.075
     - _smooth: 0.06
     - _speed: 5
     - _width: 0.1

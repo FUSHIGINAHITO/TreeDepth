@@ -8,6 +8,7 @@ public class MapEdit : MonoBehaviour
     [TextArea(30, 1000)]
     public string data;
 
+#if UNITY_EDITOR
     public void Create()
     {
         var obj = PrefabUtility.InstantiatePrefab(agentObj) as GameObject;
@@ -16,7 +17,6 @@ public class MapEdit : MonoBehaviour
         agent.Init(transform.childCount - 2);
     }
 
-#if UNITY_EDITOR
     [CustomEditor(typeof(MapEdit))]
     private class NodeAgentAdderEditor : Editor
     {

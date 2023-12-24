@@ -1,0 +1,44 @@
+﻿Chvátal Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (0.1142857142857121, 4.019047546386702) {1};
+\node[main_node] (1) at (3.08413419526919, 2.7888960273702024) {2};
+\node[main_node] (2) at (4.314285714285713, -0.18095245361327894) {3};
+\node[main_node] (3) at (3.0841341952692165, -3.150800934596777) {4};
+\node[main_node] (4) at (0.19999999999999485, -4.409523882184693) {5};
+\node[main_node] (5) at (-2.8555627666977523, -3.1508009345967696) {6};
+\node[main_node] (6) at (-4.085714285714271, -0.18095245361327894) {7};
+\node[main_node] (7) at (-2.8555627666977648, 2.788896027370198) {8};
+\node[main_node] (8) at (-0.730257537246501, 1.941677912451931) {9};
+\node[main_node] (9) at (-1.9765662610489665, -1.0245038107741087) {10};
+\node[main_node] (10) at (1.0042082401773724, -2.262799913855864) {11};
+\node[main_node] (11) at (2.243589586222459, 0.677992774247369) {12};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (3) 
+(3) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+(6) edge node {} (7) 
+(0) edge node {} (7) 
+(1) edge node {} (5) 
+(6) edge node {} (2) 
+(3) edge node {} (7) 
+(0) edge node {} (4) 
+(11) edge node {} (10) 
+(10) edge node {} (9) 
+(9) edge node {} (8) 
+(8) edge node {} (11) 
+(11) edge node {} (0) 
+(11) edge node {} (3) 
+(10) edge node {} (2) 
+(10) edge node {} (5) 
+(9) edge node {} (4) 
+(9) edge node {} (7) 
+(8) edge node {} (6) 
+(8) edge node {} (1) 
+;
+
+\end{tikzpicture}}

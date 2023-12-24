@@ -1,0 +1,37 @@
+﻿Full Binary Tree
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (0.08579499596448681, 4.449152251729281) {};
+\node[main_node] (1) at (-2.3985472154963694, 1.6559319127462295) {};
+\node[main_node] (2) at (2.661501210653751, 1.663680096765601) {};
+\node[main_node] (3) at (-1.2138014527845034, -1.14955616628479) {};
+\node[main_node] (4) at (-3.7211460855528653, -1.2062954721766397) {};
+\node[main_node] (5) at (3.9016142050040323, -0.9581919450736791) {};
+\node[main_node] (6) at (1.4971751412429377, -1.1321225342585048) {};
+\node[main_node] (7) at (-0.3535108958837778, -4.222276101716588) {};
+\node[main_node] (8) at (-2.062469733656176, -4.236803946752909) {};
+\node[main_node] (9) at (-4.671428571428572, -4.288054955631036) {};
+\node[main_node] (10) at (-2.994753833736885, -4.223809596470424) {};
+\node[main_node] (11) at (4.828571428571429, -4.162227675566468) {};
+\node[main_node] (12) at (3.1594027441485064, -4.180952235630581) {};
+\node[main_node] (13) at (2.2383373688458423, -4.215254091966335) {};
+\node[main_node] (14) at (0.5588377723970943, -4.2433414770192535) {};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(0) edge node {} (2) 
+(1) edge node {} (3) 
+(1) edge node {} (4) 
+(2) edge node {} (5) 
+(2) edge node {} (6) 
+(3) edge node {} (7) 
+(3) edge node {} (8) 
+(4) edge node {} (9) 
+(4) edge node {} (10) 
+(5) edge node {} (11) 
+(5) edge node {} (12) 
+(6) edge node {} (13) 
+(6) edge node {} (14) 
+;
+
+\end{tikzpicture}

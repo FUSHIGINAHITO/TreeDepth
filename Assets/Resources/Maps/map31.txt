@@ -1,0 +1,53 @@
+﻿Blanuša Snark
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-1.7763568394002505e-15, 4.061904689243848) {1};
+\node[main_node] (1) at (1.5172149979860405, 3.778288052742141) {2};
+\node[main_node] (2) at (2.829521703315528, 2.9657421415706233) {3};
+\node[main_node] (3) at (3.7596858236912403, 1.734005783505306) {4};
+\node[main_node] (4) at (4.182083540439127, 0.24943179898973522) {5};
+\node[main_node] (5) at (4.039667701325824, -1.287479869058875) {6};
+\node[main_node] (6) at (3.351672354576984, -2.6691607835489943) {7};
+\node[main_node] (7) at (2.2110150840848846, -3.7090072808205004) {8};
+\node[main_node] (8) at (0.771747974829589, -4.266582329428509) {9};
+\node[main_node] (9) at (-0.771747974829589, -4.266582329428513) {10};
+\node[main_node] (10) at (-2.211015084084874, -3.7090072808205004) {11};
+\node[main_node] (11) at (-3.3516723545769938, -2.669160783548998) {12};
+\node[main_node] (12) at (-4.039667701325827, -1.287479869058885) {13};
+\node[main_node] (13) at (-4.18208354043913, 0.24943179898973522) {14};
+\node[main_node] (14) at (-3.759685823691241, 1.7340057835053122) {15};
+\node[main_node] (15) at (-2.829521703315531, 2.965742141570622) {16};
+\node[main_node] (16) at (-1.5172149979860408, 3.7782880527421425) {17};
+\node[main_node] (17) at (0.03254451172726647, -0.12487018520517257) {18};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (3) 
+(3) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+(6) edge node {} (7) 
+(7) edge node {} (8) 
+(8) edge node {} (9) 
+(9) edge node {} (10) 
+(10) edge node {} (11) 
+(11) edge node {} (12) 
+(12) edge node {} (13) 
+(13) edge node {} (14) 
+(14) edge node {} (15) 
+(15) edge node {} (16) 
+(16) edge node {} (0) 
+(16) edge node {} (4) 
+(1) edge node {} (13) 
+(2) edge node {} (7) 
+(15) edge node {} (10) 
+(12) edge node {} (8) 
+(5) edge node {} (9) 
+(11) edge node {} (6) 
+(14) edge node {} (17) 
+(17) edge node {} (0) 
+(17) edge node {} (3) 
+;
+
+\end{tikzpicture}

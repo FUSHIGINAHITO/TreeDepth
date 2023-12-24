@@ -1,0 +1,29 @@
+﻿Friendship Graph F(4)
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-1.8847973567818046, 4.2962163428540965) {1};
+\node[main_node] (1) at (1.972186231825571, 4.28907802233368) {2};
+\node[main_node] (2) at (-4.4127523135425655, 1.3249806668495177) {3};
+\node[main_node] (3) at (-4.39587557480011, -2.187939569479469) {4};
+\node[main_node] (4) at (-1.942858964782519, -4.715703742020622) {5};
+\node[main_node] (5) at (1.942825745187263, -4.719417084961952) {6};
+\node[main_node] (6) at (4.446446063708349, 1.3431923461814033) {7};
+\node[main_node] (7) at (4.434501870931594, -2.1139465125895684) {8};
+\node[main_node] (8) at (0.046058320790979934, -0.1731176760408557) {9};
+
+ \path[draw, thick]
+(6) edge node {} (8) 
+(8) edge node {} (7) 
+(7) edge node {} (6) 
+(1) edge node {} (0) 
+(0) edge node {} (8) 
+(1) edge node {} (8) 
+(2) edge node {} (8) 
+(2) edge node {} (3) 
+(3) edge node {} (8) 
+(8) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (8) 
+;
+
+\end{tikzpicture}

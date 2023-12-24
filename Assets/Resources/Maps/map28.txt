@@ -1,0 +1,48 @@
+﻿Möbius-Kantor Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-1.7377890887383716, 3.9957095308559687) {1};
+\node[main_node] (1) at (1.719011813214916, 4.009477519050639) {2};
+\node[main_node] (2) at (4.213096504742552, 1.6162254324428194) {3};
+\node[main_node] (3) at (4.252519289879764, -1.840146357424568) {4};
+\node[main_node] (4) at (-1.6593362229510844, -4.273144992448085) {5};
+\node[main_node] (5) at (-4.1656395314561205, -1.8922186776596064) {6};
+\node[main_node] (6) at (-4.195587225844481, 1.5647127753272834) {7};
+\node[main_node] (7) at (-0.7367444184261398, 1.576116198262183) {8};
+\node[main_node] (8) at (1.7523088983864374, 0.5478508061569185) {9};
+\node[main_node] (9) at (1.759686328322955, -0.8161214435347741) {10};
+\node[main_node] (10) at (0.800455537025905, -1.8438281333771636) {11};
+\node[main_node] (11) at (-0.7083819407708738, -1.8806806362914497) {12};
+\node[main_node] (12) at (-1.696996544496935, -0.8243866856595607) {13};
+\node[main_node] (13) at (-1.704843904101412, 0.5386148650883014) {14};
+\node[main_node] (14) at (0.755542773468826, 1.612818445040116) {15};
+\node[main_node] (15) at (1.7974842204546029, -4.273456658529684) {16};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (3) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+(6) edge node {} (0) 
+(13) edge node {} (8) 
+(8) edge node {} (11) 
+(11) edge node {} (7) 
+(7) edge node {} (9) 
+(9) edge node {} (12) 
+(12) edge node {} (14) 
+(14) edge node {} (10) 
+(10) edge node {} (13) 
+(12) edge node {} (6) 
+(13) edge node {} (0) 
+(7) edge node {} (1) 
+(14) edge node {} (2) 
+(8) edge node {} (3) 
+(10) edge node {} (4) 
+(11) edge node {} (5) 
+(15) edge node {} (3) 
+(15) edge node {} (4) 
+(15) edge node {} (9) 
+;
+
+\end{tikzpicture}

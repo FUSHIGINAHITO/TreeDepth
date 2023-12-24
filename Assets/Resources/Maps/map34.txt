@@ -1,0 +1,68 @@
+﻿Markström Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-4.272984161779336, -2.6571428571428566) {1};
+\node[main_node] (1) at (-4.860814313115231, 0.7716820408222427) {2};
+\node[main_node] (2) at (-3.0836442266264896, 3.8030255664718684) {3};
+\node[main_node] (3) at (0.2373349333036936, 4.842857142857143) {4};
+\node[main_node] (4) at (3.5189521472822047, 3.846827566221842) {5};
+\node[main_node] (5) at (4.974405565449182, 0.7495269586735076) {6};
+\node[main_node] (6) at (4.62237935488848, -2.597411498474993) {7};
+\node[main_node] (7) at (1.8983914947668998, -4.807872021544069) {8};
+\node[main_node] (8) at (-1.5974497706809212, -4.880631150292743) {9};
+\node[main_node] (9) at (0.6092091412906857, -2.7434677904817253) {10};
+\node[main_node] (10) at (2.8849922341895864, -2.004975971162363) {11};
+\node[main_node] (11) at (1.0675731860963058, -1.6174266766760237) {12};
+\node[main_node] (12) at (-2.8649596663945456, -1.4553668929122774) {13};
+\node[main_node] (13) at (-2.346759980931201, 0.8613158695729002) {14};
+\node[main_node] (14) at (-1.5924068361315682, -0.07722039267546599) {15};
+\node[main_node] (15) at (-0.6098554810293315, 0.04889123916513016) {16};
+\node[main_node] (16) at (0.47298765237799856, -0.8360024780213768) {17};
+\node[main_node] (17) at (0.7147726073507386, 0.5486180812904777) {18};
+\node[main_node] (18) at (2.312044447180998, 1.6434330565803923) {19};
+\node[main_node] (19) at (0.556544154772201, 3.221082952943468) {20};
+\node[main_node] (20) at (1.1052124793419749, 1.4610697732182185) {21};
+\node[main_node] (21) at (3.539144507691077, 1.56373191830418) {22};
+\node[main_node] (22) at (-0.08860588252612489, -3.7584020546179477) {23};
+\node[main_node] (23) at (-2.8781281326512262, 1.9564923187880792) {24};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(0) edge node {} (8) 
+(0) edge node {} (12) 
+(1) edge node {} (2) 
+(1) edge node {} (23) 
+(2) edge node {} (3) 
+(2) edge node {} (23) 
+(3) edge node {} (4) 
+(3) edge node {} (19) 
+(4) edge node {} (5) 
+(4) edge node {} (21) 
+(5) edge node {} (6) 
+(5) edge node {} (21) 
+(6) edge node {} (7) 
+(6) edge node {} (10) 
+(7) edge node {} (8) 
+(7) edge node {} (22) 
+(8) edge node {} (22) 
+(9) edge node {} (10) 
+(9) edge node {} (11) 
+(9) edge node {} (22) 
+(10) edge node {} (11) 
+(11) edge node {} (16) 
+(12) edge node {} (13) 
+(12) edge node {} (14) 
+(13) edge node {} (14) 
+(13) edge node {} (23) 
+(14) edge node {} (15) 
+(15) edge node {} (16) 
+(15) edge node {} (17) 
+(16) edge node {} (17) 
+(17) edge node {} (20) 
+(18) edge node {} (19) 
+(18) edge node {} (20) 
+(18) edge node {} (21) 
+(19) edge node {} (20) 
+;
+
+\end{tikzpicture}

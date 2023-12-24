@@ -10,22 +10,10 @@ public class MyColor
     public static Color orange = new(233/ 255f, 203/ 255f, 153/ 255f);
     public static Color yellow = new(244/ 255f, 255/ 255f, 62/ 255f);
     public static Color gray = Color.gray;
+    public static Color lightGrey = new(0.75f, 0.75f, 0.75f);
     public static Color black = Color.black;
     public static Color white = Color.white;
     public static Color zero = new(0, 0, 0, 0);
-
-    public enum ColorEnum
-    {
-        white,
-        blue,
-        cyan,
-        red,
-        green,
-        orange,
-        gray,
-        black,
-        yellow,
-    }
 
     public static Color GetColor(ColorEnum color)
     {
@@ -52,4 +40,46 @@ public class MyColor
         }
         return zero;
     }
+}
+
+public enum ColorEnum
+{
+    white = 0,
+    blue = 1,
+    cyan = 2,
+    red = 3,
+    green = 4,
+    orange = 5,
+    gray = 6,
+    black = 7,
+    yellow = 8,
+}
+
+public enum UIGroup
+{
+    Title,
+    Menu,
+    Level,
+}
+
+public enum GameState
+{
+    None,
+    Title,
+    Menu,
+    Level,
+}
+
+public class OurLayer
+{
+    public class Mask
+    {
+        public const int Node = 1 << OurLayer.Node;
+        public const int GraphPanel = 1 << OurLayer.GraphPanel;
+        public const int Button = 1 << OurLayer.Button;
+    }
+
+    public const int Node = 6;
+    public const int GraphPanel = 7;
+    public const int Button = 8;
 }

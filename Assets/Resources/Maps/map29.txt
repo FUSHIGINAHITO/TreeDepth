@@ -1,0 +1,38 @@
+﻿Tietze Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (3.3745698314353603, 3.5283182539538895) {1};
+\node[main_node] (1) at (4.7958304602098085, 0.6935075375351607) {2};
+\node[main_node] (2) at (4.53198581623252, -2.4665989544806965) {3};
+\node[main_node] (3) at (2.089075489680843, -4.488583735296579) {4};
+\node[main_node] (4) at (-1.0819654854074165, -4.464561351045379) {5};
+\node[main_node] (5) at (-3.6609324993888563, -2.6192036805503305) {6};
+\node[main_node] (6) at (-4.189764732298366, 0.5076710748568707) {7};
+\node[main_node] (7) at (-2.7409515237936044, 3.3286618221361906) {8};
+\node[main_node] (8) at (0.2895821576183275, 4.263012639563417) {9};
+\node[main_node] (9) at (0.34127886289401843, 1.4437718948407505) {10};
+\node[main_node] (10) at (-0.9166294198433289, -1.0274909511094874) {11};
+\node[main_node] (11) at (1.7588885397040441, -0.9463886430809998) {12};
+
+ \path[draw, thick]
+(0) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (3) 
+(3) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+(6) edge node {} (7) 
+(7) edge node {} (8) 
+(8) edge node {} (0) 
+(8) edge node {} (9) 
+(9) edge node {} (10) 
+(10) edge node {} (11) 
+(11) edge node {} (9) 
+(10) edge node {} (5) 
+(11) edge node {} (2) 
+(0) edge node {} (4) 
+(7) edge node {} (3) 
+(6) edge node {} (1) 
+;
+
+\end{tikzpicture}

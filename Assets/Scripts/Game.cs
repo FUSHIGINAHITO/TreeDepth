@@ -4,6 +4,9 @@ public class Game : MonoBehaviour
 {
     public Camera _camera;
 
+    public GameState State => state;
+    private GameState state = GameState.None;
+
     public bool Started => started;
     private bool started = false;
     public bool Win => win;
@@ -16,31 +19,39 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         map = GetComponent<Map>();
-        NewGame();
-
         Application.targetFrameRate = 60;
+    }
+
+    private void Start()
+    {
+        EnterState(GameState.Title);
     }
 
     private void Update()
     {
-        win = map.Satisfied;
-
-        if (win)
+        if (state == GameState.Level)
         {
-            if (!next)
-            {
-                _camera.backgroundColor = Color.black;
-                next = true;
-            }
-            else
-            {
-                timer -= Time.deltaTime;
-            }
+            win = map.Satisfied;
 
-            if (timer < 0)
+            if (win)
             {
-                map.NextLevel();
-                NewGame();
+                if (!next)
+                {
+                    _camera.backgroundColor = Color.black;
+                    next = true;
+                }
+                else
+                {
+                    timer -= Time.deltaTime;
+                }
+
+                if (timer < 0)
+                {
+                    /*map.NextLevel();
+                    NewGame();*/
+
+                    EnterState(GameState.Menu);
+                }
             }
         }
     }
@@ -51,7 +62,66 @@ public class Game : MonoBehaviour
         win = false;
         next = false;
         timer = 1f;
-        map.Create();
+        //map.CreateLevel();
         _camera.backgroundColor = Color.black;
+    }
+
+    public void EnterState(GameState newState)
+    {
+        switch (state)
+        {
+            case GameState.None:
+
+                if (newState == GameState.Title)
+                {
+                    UIManager.instance.Show(UIGroup.Title, true);
+                }
+
+                break;
+            case GameState.Title:
+
+                if (newState == GameState.Menu)
+                {
+                    UIManager.instance.Show(UIGroup.Title, false);
+                    UIManager.instance.Show(UIGroup.Menu, true);
+
+                    map.CreateMenu();
+                }
+
+                break;
+            case GameState.Menu:
+
+                if (newState == GameState.Title)
+                {
+                    UIManager.instance.Show(UIGroup.Title, true);
+                    UIManager.instance.Show(UIGroup.Menu, false);
+                }
+                else if (newState == GameState.Level)
+                {
+                    UIManager.instance.Show(UIGroup.Menu, false);
+                    UIManager.instance.Show(UIGroup.Level, true);
+
+                    NewGame();
+                }
+
+                break;
+            case GameState.Level:
+
+                if (newState == GameState.Title)
+                {
+                    UIManager.instance.Show(UIGroup.Title, true);
+                    UIManager.instance.Show(UIGroup.Level, false);
+                }
+                else if (newState == GameState.Menu)
+                {
+                    UIManager.instance.Show(UIGroup.Menu, true);
+                    UIManager.instance.Show(UIGroup.Level, false);
+
+                    map.CreateMenu();
+                }
+
+                break;
+        }
+        state = newState;
     }
 }

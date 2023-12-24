@@ -1,0 +1,48 @@
+﻿Grid G(4,4)
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-3.4142857142857146, 3.4333332606724336) {1};
+\node[main_node] (1) at (-1.0714285714285718, 3.4333332606724336) {2};
+\node[main_node] (2) at (1.2714285714285714, 3.4333332606724336) {3};
+\node[main_node] (3) at (3.614285714285714, 3.4333332606724336) {4};
+\node[main_node] (4) at (-3.4142857142857146, 1.0904761178152897) {5};
+\node[main_node] (5) at (-1.0714285714285718, 1.0904761178152897) {6};
+\node[main_node] (6) at (1.2714285714285714, 1.0904761178152897) {7};
+\node[main_node] (7) at (3.614285714285714, 1.0904761178152897) {8};
+\node[main_node] (8) at (-3.4142857142857146, -1.252381025041853) {9};
+\node[main_node] (9) at (-1.0714285714285718, -1.252381025041853) {10};
+\node[main_node] (10) at (1.2714285714285714, -1.252381025041853) {11};
+\node[main_node] (11) at (3.614285714285714, -1.252381025041853) {12};
+\node[main_node] (12) at (-3.4142857142857146, -3.595238167898995) {13};
+\node[main_node] (13) at (-1.0714285714285718, -3.595238167898995) {14};
+\node[main_node] (14) at (1.2714285714285714, -3.595238167898995) {15};
+\node[main_node] (15) at (3.614285714285714, -3.595238167898995) {16};
+
+ \path[draw, thick]
+(15) edge node {} (11) 
+(11) edge node {} (7) 
+(7) edge node {} (3) 
+(3) edge node {} (2) 
+(2) edge node {} (1) 
+(1) edge node {} (0) 
+(0) edge node {} (4) 
+(4) edge node {} (5) 
+(5) edge node {} (6) 
+(6) edge node {} (7) 
+(6) edge node {} (2) 
+(1) edge node {} (5) 
+(5) edge node {} (9) 
+(6) edge node {} (10) 
+(10) edge node {} (11) 
+(9) edge node {} (10) 
+(10) edge node {} (14) 
+(14) edge node {} (15) 
+(9) edge node {} (13) 
+(13) edge node {} (14) 
+(4) edge node {} (8) 
+(8) edge node {} (9) 
+(8) edge node {} (12) 
+(12) edge node {} (13) 
+;
+
+\end{tikzpicture}

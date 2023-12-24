@@ -1,0 +1,39 @@
+﻿Grötzsch Graph
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (-1.82952841680994, -0.7185627277111131) {1};
+\node[main_node] (1) at (-1.1548984037062504, 1.6333183784187464) {2};
+\node[main_node] (2) at (0.1318001011697323, -2.083280616287368) {3};
+\node[main_node] (3) at (1.3406897100551562, 1.6347508310234762) {4};
+\node[main_node] (4) at (2.1117127077716997, -0.7226937287034811) {5};
+\node[main_node] (5) at (-4.710310252685035, 1.4788494570620367) {6};
+\node[main_node] (6) at (-2.7188826662331653, -4.085478613878564) {7};
+\node[main_node] (7) at (0.09123595838762277, -0.07687646463426745) {8};
+\node[main_node] (8) at (0.13321119630828182, 4.761904689243828) {9};
+\node[main_node] (9) at (2.895897531661004, -4.110807236912002) {10};
+\node[main_node] (10) at (4.752693621192744, 1.3775518771117863) {11};
+
+ \path[draw, thick]
+(0) edge node {} (5) 
+(5) edge node {} (1) 
+(1) edge node {} (8) 
+(8) edge node {} (7) 
+(7) edge node {} (5) 
+(6) edge node {} (7) 
+(7) edge node {} (9) 
+(7) edge node {} (10) 
+(9) edge node {} (2) 
+(6) edge node {} (2) 
+(6) edge node {} (0) 
+(10) edge node {} (4) 
+(4) edge node {} (9) 
+(8) edge node {} (3) 
+(3) edge node {} (10) 
+(3) edge node {} (0) 
+(0) edge node {} (4) 
+(4) edge node {} (1) 
+(1) edge node {} (2) 
+(2) edge node {} (3) 
+;
+
+\end{tikzpicture}

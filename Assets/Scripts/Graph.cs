@@ -6,6 +6,39 @@ public class Graph<T, S>
     public int VertexNum => vertices.Count;
     public bool inPool = true;
 
+    public int MaxDegree
+    {
+        get
+        {
+            int deg = -1;
+            foreach (var v in vertices)
+            {
+                if (v.Degree > deg)
+                {
+                    deg = v.Degree;
+                }
+            }
+            return deg;
+        }
+    }
+
+    public int MinDegree
+    {
+        get
+        {
+            int deg = int.MaxValue;
+            foreach (var v in vertices)
+            {
+                if (v.Degree < deg)
+                {
+                    deg = v.Degree;
+                }
+            }
+            return deg;
+        }
+    }
+
+
     private LinkedList<Vertex> vertices = new();
     private Queue<Vertex> queue = new();
 
@@ -50,6 +83,7 @@ public class Graph<T, S>
 
 
         private LinkedList<Edge> neighbors = new();
+        public int Degree => neighbors.Count;
         public T value;
         public bool visited; // 仅外部用
         public bool _visited; // 仅内部用

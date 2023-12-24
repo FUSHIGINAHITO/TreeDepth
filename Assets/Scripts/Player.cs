@@ -14,30 +14,55 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!game.Win)
+        if (game.State == GameState.Title)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                game.EnterState(GameState.Menu);
+            }
+        }
+        else if (game.State == GameState.Menu)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100, OurLayer.Mask.GraphPanel);
                 if (hit.collider != null)
                 {
-                    var node = hit.collider.GetComponent<Node>();
-                    if (node != null)
+                    if (hit.collider.transform.parent.TryGetComponent<GraphPanel>(out var graphPanel))
                     {
-                        map.RemoveNode(node, true);
-                        timer = 0.5f;
+                        map.ChooseLevel(graphPanel);
+                        game.EnterState(GameState.Level);
                     }
                 }
             }
+            //game.EnterState(GameState.Level);
+        }
+        else if (game.State == GameState.Level)
+        {
+            if (!game.Win)
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100, OurLayer.Mask.Node);
+                    if (hit.collider != null)
+                    {
+                        if (hit.collider.TryGetComponent<Node>(out var node))
+                        {
+                            map.RemoveNode(node, true);
+                            timer = 0.5f;
+                        }
+                    }
+                }
 
-            if (timer > 0)
-            {
-                timer -= Time.deltaTime;
-            }
-            else
-            {
-                AutoDelete();
-                timer = 0.5f;
+                if (timer > 0)
+                {
+                    timer -= Time.deltaTime;
+                }
+                else
+                {
+                    AutoDelete();
+                    timer = 0.5f;
+                }
             }
         }
     }
@@ -47,6 +72,14 @@ public class Player : MonoBehaviour
         if (!game.Win)
         {
             map.AutoDelete();
+        }
+    }
+
+    public void BackToMenu()
+    {
+        if (game.State == GameState.Level && !game.Win)
+        {
+            game.EnterState(GameState.Menu);
         }
     }
 }

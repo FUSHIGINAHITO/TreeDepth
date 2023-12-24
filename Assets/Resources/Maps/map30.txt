@@ -1,0 +1,68 @@
+﻿Truncated Cube
+\begin{tikzpicture}[main_node/.style={circle,draw,minimum size=1em,inner sep=3pt]}]
+
+\node[main_node] (0) at (5.142857142857142, -0.2135630665042445) {1};
+\node[main_node] (1) at (-2.1862366568248923, 0.7490037784155423) {2};
+\node[main_node] (2) at (-0.9837507484566306, 1.0987653046476578) {3};
+\node[main_node] (3) at (3.6787727375962667, -3.750201309024838) {4};
+\node[main_node] (4) at (3.3795965560671424, -1.5504614622261679) {5};
+\node[main_node] (5) at (-1.580657815951934, -0.347975553857907) {6};
+\node[main_node] (6) at (-1.1615221026985731, -1.3423389011624298) {7};
+\node[main_node] (7) at (2.4733962381021213, -1.1775752069869707) {8};
+\node[main_node] (8) at (0.012057894410835601, 1.5135651312121903) {9};
+\node[main_node] (9) at (3.6787727375962667, 3.3216298804534095) {10};
+\node[main_node] (10) at (-3.090991679226974, 1.124780624780625) {11};
+\node[main_node] (11) at (0.14357979063861404, -5.2142857142857135) {12};
+\node[main_node] (12) at (1.2738009208597445, -1.5244461420931996) {13};
+\node[main_node] (13) at (1.870707988355045, -0.0820411702764634) {14};
+\node[main_node] (14) at (0.2808828691181624, -1.9392459686577332) {15};
+\node[main_node] (15) at (-0.8160964631552865, -2.5419342184048057) {16};
+\node[main_node] (16) at (-1.184646831705656, -3.4481345363698286) {17};
+\node[main_node] (17) at (-3.393058451881982, -3.750201309024838) {18};
+\node[main_node] (18) at (-4.857142857142858, -0.2135630665042445) {19};
+\node[main_node] (19) at (-3.393058451881982, 3.3216298804534095) {20};
+\node[main_node] (20) at (0.14357979063861404, 4.785714285714286) {21};
+\node[main_node] (21) at (1.4833687774864233, 3.0224536989242865) {22};
+\node[main_node] (22) at (1.1090372266842854, 2.117698676522206) {23};
+\node[main_node] (23) at (1.4573534573534561, 0.9137674725910019) {24};
+
+ \path[draw, thick]
+(0) edge node {} (3) 
+(0) edge node {} (4) 
+(0) edge node {} (9) 
+(1) edge node {} (2) 
+(1) edge node {} (5) 
+(1) edge node {} (10) 
+(2) edge node {} (5) 
+(2) edge node {} (8) 
+(3) edge node {} (4) 
+(3) edge node {} (11) 
+(4) edge node {} (7) 
+(5) edge node {} (6) 
+(6) edge node {} (14) 
+(6) edge node {} (15) 
+(7) edge node {} (12) 
+(7) edge node {} (13) 
+(8) edge node {} (22) 
+(8) edge node {} (23) 
+(9) edge node {} (20) 
+(9) edge node {} (21) 
+(10) edge node {} (18) 
+(10) edge node {} (19) 
+(11) edge node {} (16) 
+(11) edge node {} (17) 
+(12) edge node {} (13) 
+(12) edge node {} (14) 
+(13) edge node {} (23) 
+(14) edge node {} (15) 
+(15) edge node {} (16) 
+(16) edge node {} (17) 
+(17) edge node {} (18) 
+(18) edge node {} (19) 
+(19) edge node {} (20) 
+(20) edge node {} (21) 
+(21) edge node {} (22) 
+(22) edge node {} (23) 
+;
+
+\end{tikzpicture}
