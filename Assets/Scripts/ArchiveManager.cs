@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 
 public class ArchiveManager : MonoBehaviour
 {
-    public AnimUI title;
+    public bool debug;
 
     public static ArchiveManager instance => _instance;
     private static ArchiveManager _instance;
@@ -100,22 +102,52 @@ public class ArchiveManager : MonoBehaviour
         }
     }
 
-    public Archive archive;
+    public Archive archive = null;
 
     private void Awake()
     {
         _instance = this;
         LoadArchive();
+
+#if !UNITY_EDITOR
+        debug = false;
+#endif
     }
 
     private void LoadArchive()
     {
-        archive = new();
-        Debug.Log(JsonUtility.ToJson(archive));
+        if (!debug)
+        {
+            FileInfo m_file = new(Application.persistentDataPath + "/savings.txt");
+
+            if (!m_file.Exists)
+            {
+                m_file.CreateText();
+            }
+            else
+            {
+                StreamReader sr = new(Application.persistentDataPath + "/savings.txt");
+                string jsonData = sr.ReadToEnd();
+                archive = JsonUtility.FromJson<Archive>(jsonData);
+                sr.Close();
+            }
+        }
+
+        archive ??= new();
     }
 
     public void SaveArchive()
     {
-        Debug.Log(JsonUtility.ToJson(archive));
+        FileInfo m_file = new(Application.persistentDataPath + "/savings.txt");
+
+        if (!m_file.Exists)
+        {
+            m_file.CreateText();
+        }
+
+        StreamWriter sw = new(Application.persistentDataPath + "/savings.txt");
+        sw.WriteLine(JsonUtility.ToJson(archive));
+        sw.Close();
+        sw.Dispose();
     }
 }

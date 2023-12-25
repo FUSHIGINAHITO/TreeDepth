@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class MyColor
 {
@@ -13,7 +14,7 @@ public class MyColor
     public static Color darkGrey = new(0.15f, 0.15f, 0.15f);
     public static Color black = Color.black;
     public static Color white = Color.white;
-    public static Color zero = new(0, 0, 0, 0);
+    public static Color zero = new(0.15f, 0.15f, 0.15f, 0);
 
     public static Color GetColor(ColorEnum color)
     {
@@ -39,6 +40,21 @@ public class MyColor
                 return yellow;
         }
         return zero;
+    }
+
+    public static Color SmoothDamp(Color cur, Color target, ref Vector4 velocity)
+    {
+        Vector3 rgbCur = new(cur.r, cur.g, cur.b);
+        Vector3 rgbTarget = new(target.r, target.g, target.b);
+        Vector3 rgbVelocity = velocity;
+        Vector3 rgbRes = Vector3.SmoothDamp(rgbCur, rgbTarget, ref rgbVelocity, 0.1f, float.MaxValue);
+        
+        float aCur = cur.a;
+        float aTarget = target.a;
+        float aVelocity = velocity.w;
+        float aRes = Mathf.SmoothDamp(aCur, aTarget, ref aVelocity, 0.1f, float.MaxValue);
+
+        return new(rgbRes.x, rgbRes.y, rgbRes.z, aRes);
     }
 }
 

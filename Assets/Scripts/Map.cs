@@ -347,6 +347,12 @@ public class Map : MonoBehaviour
             {
                 graphPanel.targetPos = res[count];
                 graphPanel.targetScale = a * Vector3.one;
+                if (menu)
+                {
+                    graphPanel.transform.position = graphPanel.targetPos;
+                    graphPanel.transform.localScale = 0.05f * graphPanel.targetScale;
+                }
+
                 if (!menu)
                 {
                     graphPanel.AutoSetColor();

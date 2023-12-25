@@ -481,6 +481,7 @@ MonoBehaviour:
   counter: {fileID: 4698178571738514892}
   counter2: {fileID: 3378515065916967968}
   id: 0
+  isZenEntry: 0
   rend: {fileID: 6861062536536607613}
   rend2: {fileID: 6921637150990012638}
   targetPos: {x: 0, y: 0, z: 0}

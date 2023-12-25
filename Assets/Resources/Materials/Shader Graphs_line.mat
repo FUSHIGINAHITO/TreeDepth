@@ -40,10 +40,12 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
+    - _alpha: 0.9
     - _leftFill: 1
     - _rightFill: 1
-    - _smooth: 0.03
+    - _smooth: 0.04
     - _width: 0.01
     m_Colors:
-    - _color: {r: 1, g: 1, b: 1, a: 0}
+    - _color: {r: 1, g: 1, b: 1, a: 1}
+    - _color2: {r: 0, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []

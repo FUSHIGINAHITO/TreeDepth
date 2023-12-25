@@ -26,6 +26,7 @@ public class GraphPanel : MonoBehaviour
 
     public Color targetColor;
     private Color curColor = MyColor.zero;
+    //private Vector4 colorVelocity;
     public Color targetTextColor;
     private Color curTextColor = MyColor.zero;
     public Color targetText2Color;
@@ -39,7 +40,9 @@ public class GraphPanel : MonoBehaviour
     {
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref followVelocity, 0.3f, float.MaxValue);
         transform.localScale = Vector3.SmoothDamp(transform.localScale, scaleErr * targetScale, ref scaleVelocity, 0.3f, float.MaxValue);
+
         curColor = Color.Lerp(curColor, targetColor, 0.05f);
+        //curColor = MyColor.SmoothDamp(curColor, targetColor, ref colorVelocity);
         curTextColor = Color.Lerp(curTextColor, targetTextColor, 0.05f);
         curText2Color = Color.Lerp(curText2Color, targetText2Color, 0.05f);
         SetColor(curColor, curTextColor, curText2Color);
